@@ -1,0 +1,39 @@
+Level-1:
+  Size: 4
+  Door: OAK
+  Break Delay: 0
+  Cost-xp: 20
+  Cost-eco: 5000
+  Recipe:
+    Top: OAK_PLANKS,OAK_PLANKS,OAK_PLANKS
+    Middle: OAK_PLANKS,DIAMOND,OAK_PLANKS
+    Bottom: OAK_PLANKS,OAK_PLANKS,OAK_PLANKS
+Level-2:
+  Size: 6
+  Door: WARPED
+  Break Delay: 1
+  Cost-xp: 10
+  Cost-eco: 5000
+  Recipe:
+    Top: WARPED_PLANKS,WARPED_PLANKS,WARPED_PLANKS
+    Middle: WARPED_PLANKS,DIAMOND,WARPED_PLANKS
+    Bottom: WARPED_PLANKS,WARPED_PLANKS,WARPED_PLANKS
+Level-3:
+  Size: 8
+  Door: CRIMSON
+  Break Delay: 2
+  Potion Effects:
+    Effect1:
+      Effect: SPEED
+      Amplifier: 1
+      Duration: 600
+    Effect2:
+      Effect: JUMP
+      Amplifier: 1
+      Duration: 600
+  Cost-xp: 25
+  Cost-eco: 7500
+  Recipe:
+    Top: CRIMSON_PLANKS,CRIMSON_PLANKS,CRIMSON_PLANKS
+    Middle: CRIMSON_PLANKS,DIAMOND,CRIMSON_PLANKS
+    Bottom: CRIMSON_PLANKS,CRIMSON_PLANKS,CRIMSON_PLANKS
