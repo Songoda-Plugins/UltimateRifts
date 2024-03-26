@@ -655,11 +655,25 @@ public class Rift implements SavesData {
         if (placedDoor != null)
             removeDoubleDoor(placedDoor.getBlock());
 
+        // Kill all entities that are not players in the rift area
+        killEntitiesInRiftArea();
+
         // Fill in the rift area
         fillRiftArea();
 
         // Remove the rift from the database
         delete();
+    }
+
+    private void killEntitiesInRiftArea() {
+        Location center = getCenter();
+        int radius = level.getSize() / 2;
+        int height = Settings.RIFT_HEIGHT.getInt();
+
+        Collection<Entity> nearbyEntities = center.getWorld().getNearbyEntities(center, radius, height, radius);
+        for (Entity entity : nearbyEntities)
+            if (!(entity instanceof Player))
+                entity.remove();
     }
 
     private void fillRiftArea() {
