@@ -33,6 +33,8 @@ interface:
     unlocked: '&cThis rift is unlocked!|&7Click to lock.'
     members: '&6&lMembers'
     memberslore: '&7Members: &6%members%|&7Click to manage rift members.'
+    movedoor: '&6&lMove Door'
+    movedoorlore: '&7Click to move the door.'
   members:
     title: '&2Rift Members'
     statstitle: '&6&lStatistics'
@@ -46,16 +48,14 @@ interface:
     addmemberlore: '&7Enter the name of the player|&7you want to add as a member.'
     transferownershiptitle: '&aTransfer Ownership'
     transferownershiplore: '&7Enter the name of the player|&7you want to transfer ownership to.'
-  sortingmode:
-    default: 'Default'
-    membersince: 'Member Since'
+    sortingmode:
+      default: 'Default'
+      membersince: 'Member Since'
   list:
     rift: "&7Rift &6#%id%"
     info: "&7Level: &6%level%|&7Members: &6%members%|&7Owner: &6%owner%||&7Left-Click to teleport.|&7Right-Click to delete."
     destroy: "Destroy Rift #%id%"
     confirmdelete: "&cAre you sure you want to delete Rift &4#%id%&c? Type the Rift ID to confirm."
-  destroy:
-    invalidid: "&cInvalid Rift ID. Deletion canceled."
 
 # Command Messages
 command:
@@ -65,12 +65,16 @@ command:
     playernotfound: '&cPlayer not found.'
   transferownership:
     playernotfound: '&cPlayer not found.'
-  give:
-    success: '&7You have been given a &6level %level% &7rift item.'
-    riftlimit: "&cThe player has reached the maximum number of rifts they can own."
+  riftlimit: "&cThe player has reached the maximum number of rifts they can own."
 
 # Event Messages
 event:
+  door:
+    move:
+      no-permission: "&cYou don't have permission to move the rift door."
+      not-wall-block: "&cYou can only move the door to a wall block."
+      success: "&aThe rift door has been moved successfully."
+      timed-out: "&cYou took too long to move the door."
   upgrade:
     cannotafford: '&cYou cannot afford this upgrade.'
     success: '&7You successfully upgraded this rift to &6level %level%&7!'
