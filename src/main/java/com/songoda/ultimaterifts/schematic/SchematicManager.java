@@ -20,12 +20,21 @@ import org.bukkit.Location;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SchematicManager {
     private final UltimateRifts plugin;
+    private final Map<Integer, Clipboard> schematicCache;
 
     public SchematicManager(UltimateRifts plugin) {
         this.plugin = plugin;
+        this.schematicCache = new HashMap<>();
+        reload();
+    }
+
+    public void reload() {
+        schematicCache.clear();
 
         // Copy default schematics from resources to schematics folder
         File schematicFolder = new File(plugin.getDataFolder(), "schematics");
@@ -47,6 +56,23 @@ public class SchematicManager {
         } catch (Exception e) {
             plugin.getLogger().severe("Failed to copy default schematics: " + e.getMessage());
             e.printStackTrace();
+        }
+
+        // Load schematics into cache
+        File[] schematicFiles = schematicFolder.listFiles((dir, name) -> name.toLowerCase().endsWith(".schem"));
+        if (schematicFiles != null) {
+            for (File schematicFile : schematicFiles) {
+                String fileName = schematicFile.getName();
+                String levelStr = fileName.substring(0, fileName.lastIndexOf('.'));
+                try {
+                    int level = Integer.parseInt(levelStr);
+                    Clipboard clipboard = loadSchematic(schematicFile);
+                    schematicCache.put(level, clipboard);
+                    plugin.getLogger().info("Loaded schematic for level " + level);
+                } catch (NumberFormatException e) {
+                    plugin.getLogger().warning("Invalid schematic file name: " + fileName);
+                }
+            }
         }
     }
 
@@ -74,6 +100,7 @@ public class SchematicManager {
         try (ClipboardWriter writer = BuiltInClipboardFormat.SPONGE_SCHEMATIC.getWriter(new FileOutputStream(schematicFile))) {
             writer.write(clipboard);
             plugin.getLogger().info("Schematic saved for level " + level);
+            schematicCache.put(level, clipboard); // Update the cache with the newly saved schematic
         } catch (IOException e) {
             plugin.getLogger().severe("Failed to save schematic for level " + level);
             e.printStackTrace();
@@ -81,24 +108,13 @@ public class SchematicManager {
     }
 
     public boolean pasteSchematic(int level, Location location) {
-        File schematicFolder = new File(plugin.getDataFolder(), "schematics");
-        File schematicFile = new File(schematicFolder, level + ".schem");
-
-        if (!schematicFile.exists()) {
+        Clipboard clipboard = schematicCache.get(level);
+        if (clipboard == null) {
             plugin.getLogger().warning("Schematic not found for level " + level);
             return false;
         }
 
         com.sk89q.worldedit.world.World weWorld = BukkitAdapter.adapt(location.getWorld());
-        Clipboard clipboard;
-        try (ClipboardReader reader = BuiltInClipboardFormat.SPONGE_SCHEMATIC.getReader(new FileInputStream(schematicFile))) {
-            clipboard = reader.read();
-        } catch (IOException e) {
-            plugin.getLogger().severe("Failed to load schematic for level " + level);
-            e.printStackTrace();
-            return false;
-        }
-
         try (EditSession editSession = WorldEdit.getInstance().newEditSession(weWorld)) {
             Operation operation = new ClipboardHolder(clipboard)
                     .createPaste(editSession)
@@ -114,6 +130,16 @@ public class SchematicManager {
             plugin.getLogger().severe("Error pasting schematic: " + e.getMessage());
             e.printStackTrace();
             return false;
+        }
+    }
+
+    private Clipboard loadSchematic(File schematicFile) {
+        try (ClipboardReader reader = BuiltInClipboardFormat.SPONGE_SCHEMATIC.getReader(new FileInputStream(schematicFile))) {
+            return reader.read();
+        } catch (IOException e) {
+            plugin.getLogger().severe("Failed to load schematic: " + schematicFile.getName());
+            e.printStackTrace();
+            return null;
         }
     }
 }
