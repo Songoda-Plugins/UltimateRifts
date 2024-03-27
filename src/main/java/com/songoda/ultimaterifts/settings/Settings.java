@@ -3,6 +3,7 @@ package com.songoda.ultimaterifts.settings;
 import com.craftaro.core.compatibility.CompatibleMaterial;
 import com.craftaro.core.configuration.Config;
 import com.craftaro.core.configuration.ConfigSetting;
+import com.craftaro.core.hooks.EconomyManager;
 import com.songoda.ultimaterifts.UltimateRifts;
 import org.bukkit.Material;
 
@@ -32,6 +33,9 @@ public class Settings {
     public static final ConfigSetting DANGEROUS_RIFTS = new ConfigSetting(CONFIG, "Main.Dangerous Rifts", false,
             "Should rifts allow players to break blocks and attack other players in other people's rifts?");
 
+    public static final ConfigSetting ALLOW_STEALING = new ConfigSetting(CONFIG, "Main.Allow Stealing", false,
+            "Should players be able to steal another players rift by breaking the door?");
+
     public static final ConfigSetting MAX_RIFT_MEMBERS = new ConfigSetting(CONFIG, "Main.Max Rift Members", 5,
             "The maximum number of members allowed in a rift (including the owner).");
 
@@ -46,6 +50,10 @@ public class Settings {
 
     public static final ConfigSetting PARTICLE_TYPE = new ConfigSetting(CONFIG, "Main.Upgrade Particle Type", "SPELL_WITCH",
             "The type of particle shown when a furnace is upgraded.");
+
+    public static final ConfigSetting ECONOMY_PLUGIN = new ConfigSetting(CONFIG, "Main.Economy", EconomyManager.getEconomy() == null ? "Vault" : EconomyManager.getEconomy().getName(),
+            "Which economy plugin should be used?",
+            "Supported plugins you have installed: \"" + String.join("\", \"", EconomyManager.getManager().getRegisteredPlugins()) + "\".");
 
     public static final ConfigSetting UPGRADE_WITH_ECONOMY = new ConfigSetting(CONFIG, "Main.Upgrade With Economy", true,
             "Should you be able to upgrade furnaces with economy?");

@@ -540,7 +540,11 @@ public class Rift implements SavesData {
         openDoor(getRiftDoor().getBlock());
 
         // Send a title message to the player
-        player.sendTitle(ChatColor.GOLD + "Entering Rift", ChatColor.YELLOW + "Rift ID: " + getRiftId(), 10, 70, 20);
+        String title = UltimateRifts.getInstance().getLocale().getMessage("event.enter.title").getMessage();
+        String subtitle = UltimateRifts.getInstance().getLocale().getMessage("event.enter.subtitle")
+                .processPlaceholder("id", getRiftId()).getMessage();
+        player.sendTitle(title, subtitle, 10, 70, 20);
+
         UltimateRifts.getInstance().getLocale().getMessage("event.enter.success")
                 .processPlaceholder("id", getRiftId()).sendPrefixedMessage(player);
         XSound.ENTITY_ENDERMAN_TELEPORT.play(player);
@@ -762,5 +766,9 @@ public class Rift implements SavesData {
         return (location.getBlockX() == minX || location.getBlockX() == maxX
                 || location.getBlockZ() == minZ || location.getBlockZ() == maxZ)
                 && location.getBlockY() == 1;
+    }
+
+    public boolean isOwner(Player player) {
+        return getOwner() != null && getOwner().getUniqueId().equals(player.getUniqueId());
     }
 }

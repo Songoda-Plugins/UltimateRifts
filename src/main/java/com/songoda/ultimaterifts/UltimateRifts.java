@@ -6,6 +6,7 @@ import com.craftaro.core.commands.CommandManager;
 import com.craftaro.core.configuration.Config;
 import com.craftaro.core.data.DatabaseManager;
 import com.craftaro.core.gui.GuiManager;
+import com.craftaro.core.hooks.EconomyManager;
 import com.craftaro.core.third_party.de.tr7zw.nbtapi.NBTItem;
 import com.craftaro.core.utils.TextUtils;
 import com.craftaro.third_party.com.cryptomorin.xseries.XMaterial;
@@ -99,6 +100,10 @@ public class UltimateRifts extends SongodaPlugin {
         schematicManager = new SchematicManager(this);
 
         databaseManager.load("Rifts", () -> riftManager.loadData());
+        EconomyManager.load();
+
+        // Set Economy preference
+        EconomyManager.getManager().setPreferredHook(Settings.ECONOMY_PLUGIN.getString());
     }
 
     @Override
