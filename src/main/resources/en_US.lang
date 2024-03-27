@@ -102,3 +102,9 @@ event:
   destroy:
     success: "&aRift #%id% has been destroyed."
     invalidid: "&cInvalid Rift ID. Deletion canceled."
+  enter:
+    title: "&6Entering Rift"
+    subtitle: "&eRift ID: &6%id%"
+  exit:
+    title: "&6Exiting Rift"
+    subtitle: "&eCome back soon!"
