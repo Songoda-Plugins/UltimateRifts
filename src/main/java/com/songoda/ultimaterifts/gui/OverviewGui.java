@@ -5,8 +5,8 @@ import com.craftaro.core.gui.GuiUtils;
 import com.craftaro.core.utils.NumberUtils;
 import com.craftaro.third_party.com.cryptomorin.xseries.XMaterial;
 import com.songoda.ultimaterifts.UltimateRifts;
-import com.songoda.ultimaterifts.rift.levels.Level;
 import com.songoda.ultimaterifts.rift.Rift;
+import com.songoda.ultimaterifts.rift.levels.Level;
 import com.songoda.ultimaterifts.settings.Settings;
 import com.songoda.ultimaterifts.utils.CostType;
 import org.bukkit.entity.Player;
@@ -125,6 +125,17 @@ public class OverviewGui extends CustomizableGui {
                                     .processPlaceholder("members", rift.getMembers().size()).getMessage().split("\\|")),
                     event -> {
                         this.plugin.getGuiManager().showGUI(this.player, new MembersGui(plugin, this.rift));
+                    });
+        }
+
+        if (Settings.ALLOW_MOVE_DOOR.getBoolean()) {
+            setButton("move_door", 0, 6, GuiUtils.createButtonItem(
+                            XMaterial.OAK_DOOR.parseItem(),
+                            this.plugin.getLocale().getMessage("interface.rift.movedoor").getMessage(),
+                            this.plugin.getLocale().getMessage("interface.rift.movedoorlore").getMessage().split("\\|")),
+                    event -> {
+                        this.plugin.getDoorHandler().addSelection(this.player);
+                        exit();
                     });
         }
 

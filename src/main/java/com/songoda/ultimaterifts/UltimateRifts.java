@@ -12,6 +12,7 @@ import com.craftaro.third_party.com.cryptomorin.xseries.XMaterial;
 import com.songoda.ultimaterifts.commands.*;
 import com.songoda.ultimaterifts.generator.StonePlotGenerator;
 import com.songoda.ultimaterifts.listeners.BlockListeners;
+import com.songoda.ultimaterifts.rift.DoorHandler;
 import com.songoda.ultimaterifts.rift.RiftManager;
 import com.songoda.ultimaterifts.rift.levels.Level;
 import com.songoda.ultimaterifts.rift.levels.LevelManager;
@@ -48,6 +49,7 @@ public class UltimateRifts extends SongodaPlugin {
     private LevelManager levelManager;
 
     private final GuiManager guiManager = new GuiManager(this);
+    private DoorHandler doorHandler;
 
     public static UltimateRifts INSTANCE;
 
@@ -83,6 +85,8 @@ public class UltimateRifts extends SongodaPlugin {
 
         // Generate the stone rift world
         generateStonePlotWorld();
+
+        doorHandler = new DoorHandler();
 
         PluginManager pluginManager = getServer().getPluginManager();
         pluginManager.registerEvents(new BlockListeners(this, riftManager), this);
@@ -250,6 +254,10 @@ public class UltimateRifts extends SongodaPlugin {
 
     public SchematicManager getSchematicManager() {
         return schematicManager;
+    }
+
+    public DoorHandler getDoorHandler() {
+        return doorHandler;
     }
 
 }

@@ -26,6 +26,9 @@ public class Settings {
             "Should locked rifts be allowed?");
     public static final ConfigSetting ALLOW_INVITES = new ConfigSetting(CONFIG, "Main.Allow Invites", true,
             "Should an owner be able to invite players to their rift?");
+
+    public static final ConfigSetting ALLOW_MOVE_DOOR = new ConfigSetting(CONFIG, "Main.Allow Move Door", true,
+            "Should players be able to move the door of a rift?");
     public static final ConfigSetting DANGEROUS_RIFTS = new ConfigSetting(CONFIG, "Main.Dangerous Rifts", false,
             "Should rifts allow players to break blocks and attack other players in other people's rifts?");
 

@@ -3,6 +3,7 @@ package com.songoda.ultimaterifts.listeners;
 import com.craftaro.core.third_party.de.tr7zw.nbtapi.NBTItem;
 import com.craftaro.third_party.com.cryptomorin.xseries.XSound;
 import com.songoda.ultimaterifts.UltimateRifts;
+import com.songoda.ultimaterifts.rift.DoorHandler;
 import com.songoda.ultimaterifts.rift.Rift;
 import com.songoda.ultimaterifts.rift.RiftManager;
 import com.songoda.ultimaterifts.rift.levels.Level;
@@ -30,10 +31,12 @@ import org.bukkit.inventory.ItemStack;
 public class BlockListeners implements Listener {
     private final UltimateRifts plugin;
     private final RiftManager riftManager;
+    private final DoorHandler doorHandler;
 
     public BlockListeners(UltimateRifts plugin, RiftManager riftManager) {
         this.plugin = plugin;
         this.riftManager = riftManager;
+        this.doorHandler = plugin.getDoorHandler();
     }
 
 
@@ -168,18 +171,28 @@ public class BlockListeners implements Listener {
     public void onBeaconInteract(PlayerInteractEvent event) {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             Block clickedBlock = event.getClickedBlock();
+            Player player = event.getPlayer();
+            if (plugin.getDoorHandler().isInSelection(player)) {
+                Rift rift = riftManager.getRiftByLocation(clickedBlock.getLocation());
+                if (rift != null) {
+                    rift.attemptMoveDoor(player, clickedBlock.getLocation());
+                }
+
+                doorHandler.removeSelection(player);
+            }
             if (clickedBlock != null && clickedBlock.getType() == Material.BEACON) {
                 Location beaconLocation = clickedBlock.getLocation();
                 Rift rift = riftManager.getRiftByLocation(beaconLocation);
-                if (rift != null) {
-                    event.setCancelled(true);
-                    if (!rift.hasAccess(event.getPlayer())) {
-                        plugin.getLocale().getMessage("event.interact.notowner").sendPrefixedMessage(event.getPlayer());
-                        XSound.ENTITY_VILLAGER_NO.play(event.getPlayer());
-                        return;
-                    }
-                    plugin.getGuiManager().showGUI(event.getPlayer(), rift.getOverviewGui(event.getPlayer()));
+                if (rift == null)
+                    return;
+
+                event.setCancelled(true);
+                if (!rift.hasAccess(player)) {
+                    plugin.getLocale().getMessage("event.interact.notowner").sendPrefixedMessage(player);
+                    XSound.ENTITY_VILLAGER_NO.play(player);
+                    return;
                 }
+                plugin.getGuiManager().showGUI(player, rift.getOverviewGui(player));
             }
         }
     }

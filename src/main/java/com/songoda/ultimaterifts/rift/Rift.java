@@ -711,4 +711,56 @@ public class Rift implements SavesData {
         Block block = location.getBlock();
         return block.getLocation().getY() != 1 || block.getRelative(BlockFace.DOWN).getType() != Material.BEDROCK;
     }
+
+    public void attemptMoveDoor(Player player, Location location) {
+        if (!getOwner().getUniqueId().equals(player.getUniqueId())) {
+            UltimateRifts.getInstance().getLocale().getMessage("event.door.move.no-permission").sendPrefixedMessage(player);
+            return;
+        }
+
+        // Check if the clicked block is a wall block
+        if (!isWallBlock(location)) {
+            UltimateRifts.getInstance().getLocale().getMessage("event.door.move.not-wall-block").sendPrefixedMessage(player);
+            return;
+        }
+
+        // Remove the old doors
+        removeDoubleDoor(riftDoor.getBlock());
+
+        // get the material of the clicked block
+        Material material = location.getBlock().getType();
+
+        // Get location of the old door
+        Location oldDoor = riftDoor.clone();
+
+        // set the bottom and top of the old door to this material
+        oldDoor.getBlock().setType(material);
+        oldDoor.getBlock().getRelative(BlockFace.UP).setType(material);
+
+        // Set the clicked block to the default block from the schematic
+        location.getBlock().setType(material);
+
+        // Place the new doors at the clicked wall block
+        BlockFace doorFacing = getDirectionFacing(getCenter(), location);
+        placeDoubleDoor(location.getBlock(), doorFacing, null);
+
+        // Update the rift door locations
+        setRiftDoor(location);
+
+        UltimateRifts.getInstance().getLocale().getMessage("event.door.move.success").sendPrefixedMessage(player);
+        save();
+    }
+
+    private boolean isWallBlock(Location location) {
+        Location center = getCenter();
+        int radius = (level.getSize() / 2) + 1;
+        int minX = center.getBlockX() - radius;
+        int maxX = center.getBlockX() + radius;
+        int minZ = center.getBlockZ() - radius;
+        int maxZ = center.getBlockZ() + radius;
+
+        return (location.getBlockX() == minX || location.getBlockX() == maxX
+                || location.getBlockZ() == minZ || location.getBlockZ() == maxZ)
+                && location.getBlockY() == 1;
+    }
 }
