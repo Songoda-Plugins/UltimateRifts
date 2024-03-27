@@ -109,6 +109,7 @@ public class UltimateRifts extends SongodaPlugin {
     public void onConfigReload() {
         this.setLocale(getConfig().getString("System.Language Mode"), true);
         this.locale.reloadMessages();
+        this.schematicManager.reload();
     }
 
     @Override
