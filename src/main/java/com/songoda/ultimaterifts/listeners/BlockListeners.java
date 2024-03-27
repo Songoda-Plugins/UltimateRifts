@@ -156,7 +156,7 @@ public class BlockListeners implements Listener {
                 return;
             }
 
-            if (!Settings.DANGEROUS_RIFTS.getBoolean() && !rift.hasAccess(event.getPlayer()))
+            if (!Settings.ALLOW_STEALING.getBoolean() && !rift.isOwner(event.getPlayer()))
                 event.setCancelled(true);
 
             if (!rift.canBreak(blockLocation)) {

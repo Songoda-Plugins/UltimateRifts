@@ -767,4 +767,8 @@ public class Rift implements SavesData {
                 || location.getBlockZ() == minZ || location.getBlockZ() == maxZ)
                 && location.getBlockY() == 1;
     }
+
+    public boolean isOwner(Player player) {
+        return getOwner() != null && getOwner().getUniqueId().equals(player.getUniqueId());
+    }
 }

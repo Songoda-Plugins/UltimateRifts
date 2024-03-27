@@ -33,6 +33,9 @@ public class Settings {
     public static final ConfigSetting DANGEROUS_RIFTS = new ConfigSetting(CONFIG, "Main.Dangerous Rifts", false,
             "Should rifts allow players to break blocks and attack other players in other people's rifts?");
 
+    public static final ConfigSetting ALLOW_STEALING = new ConfigSetting(CONFIG, "Main.Allow Stealing", false,
+            "Should players be able to steal another players rift by breaking the door?");
+
     public static final ConfigSetting MAX_RIFT_MEMBERS = new ConfigSetting(CONFIG, "Main.Max Rift Members", 5,
             "The maximum number of members allowed in a rift (including the owner).");
 
