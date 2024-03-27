@@ -3,6 +3,7 @@ package com.songoda.ultimaterifts.settings;
 import com.craftaro.core.compatibility.CompatibleMaterial;
 import com.craftaro.core.configuration.Config;
 import com.craftaro.core.configuration.ConfigSetting;
+import com.craftaro.core.hooks.EconomyManager;
 import com.songoda.ultimaterifts.UltimateRifts;
 import org.bukkit.Material;
 
@@ -46,6 +47,10 @@ public class Settings {
 
     public static final ConfigSetting PARTICLE_TYPE = new ConfigSetting(CONFIG, "Main.Upgrade Particle Type", "SPELL_WITCH",
             "The type of particle shown when a furnace is upgraded.");
+
+    public static final ConfigSetting ECONOMY_PLUGIN = new ConfigSetting(CONFIG, "Main.Economy", EconomyManager.getEconomy() == null ? "Vault" : EconomyManager.getEconomy().getName(),
+            "Which economy plugin should be used?",
+            "Supported plugins you have installed: \"" + String.join("\", \"", EconomyManager.getManager().getRegisteredPlugins()) + "\".");
 
     public static final ConfigSetting UPGRADE_WITH_ECONOMY = new ConfigSetting(CONFIG, "Main.Upgrade With Economy", true,
             "Should you be able to upgrade furnaces with economy?");
