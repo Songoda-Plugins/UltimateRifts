@@ -86,7 +86,7 @@ public class BlockListeners implements Listener {
                 if (rift.getOwner() != null && !rift.getOwner().getUniqueId().equals(player.getUniqueId()))
                     plugin.getLocale().getMessage("event.place.ownerchange").sendPrefixedMessage(player);
 
-                rift.setOwner(player);
+                rift.setOwner(player).save();
 
                 rift.setLevel(riftLevel);
 
