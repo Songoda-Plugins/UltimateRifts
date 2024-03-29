@@ -35,6 +35,8 @@ interface:
     memberslore: '&7Members: &6%members%|&7Click to manage rift members.'
     movedoor: '&6&lMove Door'
     movedoorlore: '&7Click to move the door.'
+    customize: '&6&lCustomize'
+    customizelore: '&7Click to customize your rift.'
   members:
     title: '&2Rift Members'
     statstitle: '&6&lStatistics'
@@ -56,6 +58,14 @@ interface:
     info: "&7Level: &6%level%|&7Members: &6%members%|&7Owner: &6%owner%||&7Left-Click to teleport.|&7Right-Click to delete."
     destroy: "Destroy Rift #%id%"
     confirmdelete: "&cAre you sure you want to delete Rift &4#%id%&c? Type the Rift ID to confirm."
+  customize:
+    title: 'Customize'
+    info: '&6Customize your rift.'
+    infolore: '&7Items placed here will be consumed.'
+    wallpaper: '&6Wallpaper'
+    wallpaperlore: '&7Items placed above will be used as wallpaper.'
+    floor: '&6Floor'
+    floorlore: '&c(Coming Soon)'
 
 # Command Messages
 command:
@@ -108,3 +118,6 @@ event:
   exit:
     title: "&6Exiting Rift"
     subtitle: "&eCome back soon!"
+  wallpaper:
+    air: "&cYou can't use air as wallpaper."
+    onlyblocks: "&cYou can only use blocks as wallpaper."

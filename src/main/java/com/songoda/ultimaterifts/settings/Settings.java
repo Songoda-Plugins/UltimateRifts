@@ -4,6 +4,7 @@ import com.craftaro.core.compatibility.CompatibleMaterial;
 import com.craftaro.core.configuration.Config;
 import com.craftaro.core.configuration.ConfigSetting;
 import com.craftaro.core.hooks.EconomyManager;
+import com.craftaro.core.nms.nbt.NBTCompound;
 import com.songoda.ultimaterifts.UltimateRifts;
 import org.bukkit.Material;
 
@@ -33,6 +34,9 @@ public class Settings {
     public static final ConfigSetting DANGEROUS_RIFTS = new ConfigSetting(CONFIG, "Main.Dangerous Rifts", false,
             "Should rifts allow players to break blocks and attack other players in other people's rifts?");
 
+    public static final ConfigSetting ALLOW_CUSTOMIZING = new ConfigSetting(CONFIG, "Main.Allow Customizing", true,
+            "Should players be able to customize their rifts wallpaper and floor?");
+
     public static final ConfigSetting ALLOW_STEALING = new ConfigSetting(CONFIG, "Main.Allow Stealing", false,
             "Should players be able to steal another players rift by breaking the door?");
 
@@ -47,6 +51,9 @@ public class Settings {
 
     public static final ConfigSetting INVITE_ICON = new ConfigSetting(CONFIG, "Main.Invite Icon", "PAPER",
             "The icon used in the overview interface that represents player invites.");
+
+    public static final ConfigSetting CUSTOMIZE_ICON = new ConfigSetting(CONFIG, "Main.Customize Icon", "PAINTING",
+            "The icon used in the overview interface that represents customizing the rift.");
 
     public static final ConfigSetting PARTICLE_TYPE = new ConfigSetting(CONFIG, "Main.Upgrade Particle Type", "SPELL_WITCH",
             "The type of particle shown when a furnace is upgraded.");

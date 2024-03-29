@@ -2,7 +2,6 @@ package com.songoda.ultimaterifts.rift;
 
 import com.craftaro.core.data.LoadsData;
 import com.craftaro.core.data.SQLSelect;
-import com.craftaro.core.data.SavesData;
 import com.craftaro.third_party.org.jooq.DSLContext;
 import com.craftaro.third_party.org.jooq.impl.DSL;
 import com.craftaro.third_party.org.jooq.impl.SQLDataType;
@@ -10,6 +9,7 @@ import com.songoda.ultimaterifts.UltimateRifts;
 import com.songoda.ultimaterifts.settings.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -99,7 +99,7 @@ public class RiftManager implements LoadsData {
     public void loadDataImpl(DSLContext ctx) {
         SQLSelect.create(ctx).select("rift_id", "rift_door_world", "rift_door_x", "rift_door_y", "rift_door_z",
                         "placed_door_world", "placed_door_x", "placed_door_y", "placed_door_z", "level",
-                        "first_carve", "potion_effect", "last_door_enter", "is_locked")
+                        "first_carve", "potion_effect", "last_door_enter", "is_locked", "wallpaper")
                 .from("rift", result -> {
                     int riftId = result.get("rift_id").asInt();
                     World riftDoorWorld = Bukkit.getWorld(result.get("rift_door_world").asString());
@@ -117,6 +117,8 @@ public class RiftManager implements LoadsData {
                     boolean potionEffect = result.get("potion_effect").asBoolean();
                     boolean isLocked = result.get("is_locked").asBoolean();
 
+                    String wallpaper = result.get("wallpaper").asString();
+
                     Instant lastDoorEnter = result.get("last_door_enter").asInstant();
 
                     Rift rift = new Rift(riftId);
@@ -127,6 +129,18 @@ public class RiftManager implements LoadsData {
                     rift.setPotionEffect(potionEffect);
                     rift.setLastDoorEnter(lastDoorEnter);
                     rift.setLocked(isLocked);
+
+                    Material[] wallpaperMaterials = new Material[9];
+                    int i = 0;
+                    for (String materialStr : wallpaper.split(",")) {
+                        Material material = Material.getMaterial(materialStr);
+                        if (material != null) {
+                            if (!material.isAir())
+                                wallpaperMaterials[i] = material;
+                        }
+                        i++;
+                    }
+                    rift.setWallpaper(wallpaperMaterials);
 
                     addRift(rift);
                 });
@@ -166,6 +180,10 @@ public class RiftManager implements LoadsData {
                 .column("last_door_enter", SQLDataType.BIGINT.nullable(true))
                 .column("is_locked", SQLDataType.BOOLEAN.nullable(false).defaultValue(false))
                 .constraint(DSL.constraint().primaryKey("rift_id"))
+                .execute();
+
+        ctx.alterTable("rift")
+                .addColumnIfNotExists("wallpaper", SQLDataType.VARCHAR(255).nullable(false).defaultValue(""))
                 .execute();
 
         ctx.createTableIfNotExists("rift_members")
