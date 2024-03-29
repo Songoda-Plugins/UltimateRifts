@@ -1,7 +1,7 @@
 package com.songoda.ultimaterifts.utils;
 
 /**
- * Represents a cost type when making a purchase from UltimateFurnaces
+ * Represents a cost type when making a purchase from UltimateRifts
  */
 public enum CostType {
     /**

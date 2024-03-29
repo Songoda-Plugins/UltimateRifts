@@ -56,17 +56,17 @@ public class Settings {
             "The icon used in the overview interface that represents customizing the rift.");
 
     public static final ConfigSetting PARTICLE_TYPE = new ConfigSetting(CONFIG, "Main.Upgrade Particle Type", "SPELL_WITCH",
-            "The type of particle shown when a furnace is upgraded.");
+            "The type of particle shown when a rift is upgraded.");
 
     public static final ConfigSetting ECONOMY_PLUGIN = new ConfigSetting(CONFIG, "Main.Economy", EconomyManager.getEconomy() == null ? "Vault" : EconomyManager.getEconomy().getName(),
             "Which economy plugin should be used?",
             "Supported plugins you have installed: \"" + String.join("\", \"", EconomyManager.getManager().getRegisteredPlugins()) + "\".");
 
     public static final ConfigSetting UPGRADE_WITH_ECONOMY = new ConfigSetting(CONFIG, "Main.Upgrade With Economy", true,
-            "Should you be able to upgrade furnaces with economy?");
+            "Should you be able to upgrade rifts with economy?");
 
     public static final ConfigSetting UPGRADE_WITH_XP = new ConfigSetting(CONFIG, "Main.Upgrade With XP", true,
-            "Should you be able to upgrade furnaces with experience?");
+            "Should you be able to upgrade rifts with experience?");
 
     public static final ConfigSetting ECO_ICON = new ConfigSetting(CONFIG, "Interfaces.Economy Icon", "SUNFLOWER",
             "The icon used in the overview interface that represents the economy upgrade.");
