@@ -103,6 +103,17 @@ public class OverviewGui extends CustomizableGui {
                     });
         }
 
+        if (Settings.ALLOW_CUSTOMIZING.getBoolean()) {
+            setButton("customize", 0, 0, GuiUtils.createButtonItem(
+                            Settings.CUSTOMIZE_ICON.getMaterial(XMaterial.PAINTING),
+                            this.plugin.getLocale().getMessage("interface.rift.customize").getMessage(),
+                            this.plugin.getLocale().getMessage("interface.rift.customizelore").getMessage().split("\\|")),
+                    event -> {
+                        this.plugin.getGuiManager().showGUI(this.player, new WallpaperGui(plugin, this.rift));
+                        showPage();
+                    });
+        }
+
         if (Settings.ALLOW_LOCKED.getBoolean()) {
             setButton("locked", 0, 8, GuiUtils.createButtonItem(
                             Settings.LOCK_ICON.getMaterial(XMaterial.REDSTONE_BLOCK),

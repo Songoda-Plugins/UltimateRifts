@@ -52,6 +52,9 @@ public class Rift implements SavesData {
 
     private final Map<UUID, Instant> recentTeleports = new HashMap<>();
 
+    private Material[] wallpaper = new Material[9];
+    private Material[] floor = new Material[9];
+
     public Rift(int riftId) {
         this.riftId = riftId;
     }
@@ -344,6 +347,8 @@ public class Rift implements SavesData {
 
     public void setup() {
         carveRift();
+        if (wallpaper.length > 0)
+            paintWalls();
     }
 
     public Location getCenter() {
@@ -579,6 +584,8 @@ public class Rift implements SavesData {
                 .withField("potion_effect", potionEffect)
                 .withField("last_door_enter", lastDoorEnter != null ? lastDoorEnter.toEpochMilli() : null)
                 .withField("is_locked", isLocked)
+                .withField("wallpaper", wallpaper.length > 0 ? Arrays.stream(wallpaper)
+                        .map(Enum::name).reduce((a, b) -> a + "," + b).orElse("AIR") : null)
                 .onDuplicateKeyUpdate(columns)
                 .execute();
     }
@@ -770,5 +777,91 @@ public class Rift implements SavesData {
 
     public boolean isOwner(Player player) {
         return getOwner() != null && getOwner().getUniqueId().equals(player.getUniqueId());
+    }
+
+    public Material[] getWallpaper() {
+        return wallpaper.clone();
+    }
+
+    public void setWallpaper(Material[] wallpaper) {
+        this.wallpaper = wallpaper;
+    }
+
+    public Material[] getFloor() {
+        return floor.clone();
+    }
+
+    public void setFloor(Material[] floor) {
+        this.floor = floor;
+    }
+
+    public void updateWalls() {
+        paintWalls();
+
+        BlockFace doorFacing = getDirectionFacing(getCenter(), riftDoor);
+        placeDoubleDoor(riftDoor.getBlock(), doorFacing, null);
+
+        setRiftDoor(riftDoor);
+
+    }
+
+    private void paintWalls() {
+        Location center = getCenter();
+        int radius = (level.getSize() / 2) + 1;
+        int minX = center.getBlockX() - radius;
+        int maxX = center.getBlockX() + radius;
+        int minZ = center.getBlockZ() - radius;
+        int maxZ = center.getBlockZ() + radius;
+        int maxY = Settings.RIFT_HEIGHT.getInt();
+
+        for (int x = minX; x <= maxX; x += 3) {
+            paintWallSegment(center.getWorld(), x, maxY, minZ, true, 0);
+            paintWallSegment(center.getWorld(), x, maxY, maxZ, true, 0);
+        }
+
+        for (int z = minZ; z <= maxZ; z += 3) {
+            paintWallSegment(center.getWorld(), minX, maxY, z, false, 0);
+            paintWallSegment(center.getWorld(), maxX, maxY, z, false, 0);
+        }
+    }
+
+    private void paintWallSegment(World world, int x, int y, int z, boolean isXAxis, int startIndex) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                int wallpaperIndex = (startIndex + i * 3 + j) % wallpaper.length;
+                if (isXAxis) {
+                    setWallBlock(world, x + j, y - i, z, wallpaper[wallpaperIndex]);
+                } else {
+                    setWallBlock(world, x, y - i, z + j, wallpaper[wallpaperIndex]);
+                }
+            }
+        }
+    }
+
+    private void setWallBlock(World world, int x, int y, int z, Material wallpaperMat) {
+        if (wallpaperMat != null && wallpaperMat != Material.AIR) {
+            Block block = world.getBlockAt(x, y, z);
+            if (isWallBlockAt(block.getLocation())) {
+                block.setType(wallpaperMat);
+            }
+        }
+    }
+
+    private boolean isWallBlockAt(Location location) {
+        Location center = getCenter();
+        int radius = (level.getSize() / 2) + 1;
+        int minX = center.getBlockX() - radius;
+        int maxX = center.getBlockX() + radius;
+        int minZ = center.getBlockZ() - radius;
+        int maxZ = center.getBlockZ() + radius;
+        int minY = 1;
+        int maxY = Settings.RIFT_HEIGHT.getInt();
+
+        int x = location.getBlockX();
+        int y = location.getBlockY();
+        int z = location.getBlockZ();
+
+        return (x == minX || x == maxX || z == minZ || z == maxZ) &&
+                y >= minY && y <= maxY;
     }
 }
