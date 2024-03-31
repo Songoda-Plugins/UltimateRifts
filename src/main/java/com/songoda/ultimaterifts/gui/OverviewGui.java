@@ -109,7 +109,7 @@ public class OverviewGui extends CustomizableGui {
                             this.plugin.getLocale().getMessage("interface.rift.customize").getMessage(),
                             this.plugin.getLocale().getMessage("interface.rift.customizelore").getMessage().split("\\|")),
                     event -> {
-                        this.plugin.getGuiManager().showGUI(this.player, new WallpaperGui(plugin, this.rift));
+                        this.plugin.getGuiManager().showGUI(this.player, new CustomizeGui(plugin, this.rift));
                         showPage();
                     });
         }

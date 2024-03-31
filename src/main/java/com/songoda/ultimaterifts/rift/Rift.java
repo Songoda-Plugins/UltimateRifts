@@ -585,9 +585,9 @@ public class Rift implements SavesData {
                 .withField("last_door_enter", lastDoorEnter != null ? lastDoorEnter.toEpochMilli() : null)
                 .withField("is_locked", isLocked)
                 .withField("wallpaper", wallpaper.length > 0 ? Arrays.stream(wallpaper)
-                        .map(Enum::name).reduce((a, b) -> a + "," + b).orElse("AIR") : null)
+                        .map(e -> e == null ? "AIR" : e.name()).reduce((a, b) -> a + "," + b).orElse("AIR") : null)
                 .withField("floor", floor.length > 0 ? Arrays.stream(floor)
-                        .map(Enum::name).reduce((a, b) -> a + "," + b).orElse("AIR") : null)
+                        .map(e -> e == null ? "AIR" : e.name()).reduce((a, b) -> a + "," + b).orElse("AIR") : null)
                 .onDuplicateKeyUpdate(columns)
                 .execute();
     }

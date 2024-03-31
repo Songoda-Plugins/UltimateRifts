@@ -74,6 +74,7 @@ public class UltimateRifts extends SongodaPlugin {
                 .addSubCommands(
                         new CommandGive(this),
                         new CommandInfo(this),
+                        new CommandMenu(this),
                         new CommandSave(this),
                         new CommandPaste(this),
                         new CommandTele(this));
