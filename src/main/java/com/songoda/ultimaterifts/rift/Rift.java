@@ -586,6 +586,8 @@ public class Rift implements SavesData {
                 .withField("is_locked", isLocked)
                 .withField("wallpaper", wallpaper.length > 0 ? Arrays.stream(wallpaper)
                         .map(Enum::name).reduce((a, b) -> a + "," + b).orElse("AIR") : null)
+                .withField("floor", floor.length > 0 ? Arrays.stream(floor)
+                        .map(Enum::name).reduce((a, b) -> a + "," + b).orElse("AIR") : null)
                 .onDuplicateKeyUpdate(columns)
                 .execute();
     }
@@ -797,6 +799,7 @@ public class Rift implements SavesData {
 
     public void updateWalls() {
         paintWalls();
+        paintFloor();
 
         BlockFace doorFacing = getDirectionFacing(getCenter(), riftDoor);
         placeDoubleDoor(riftDoor.getBlock(), doorFacing, null);
@@ -863,5 +866,53 @@ public class Rift implements SavesData {
 
         return (x == minX || x == maxX || z == minZ || z == maxZ) &&
                 y >= minY && y <= maxY;
+    }
+
+    private void paintFloor() {
+        Location center = getCenter();
+        int radius = level.getSize() / 2;
+        int minX = center.getBlockX() - radius;
+        int maxX = center.getBlockX() + radius;
+        int minZ = center.getBlockZ() - radius;
+        int maxZ = center.getBlockZ() + radius;
+
+        for (int x = minX; x <= maxX; x += 3) {
+            for (int z = minZ; z <= maxZ; z += 3) {
+                paintFloorSegment(center.getWorld(), x, 0, z);
+            }
+        }
+    }
+
+    private void paintFloorSegment(World world, int x, int y, int z) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                int floorIndex = (i * 3 + j) % floor.length;
+                setFloorBlock(world, x + j, y, z + i, floor[floorIndex]);
+            }
+        }
+    }
+
+    private void setFloorBlock(World world, int x, int y, int z, Material floorMat) {
+        if (floorMat != null && floorMat != Material.AIR) {
+            Block block = world.getBlockAt(x, y, z);
+            if (isFloorBlockAt(block.getLocation())) {
+                block.setType(floorMat);
+            }
+        }
+    }
+
+    private boolean isFloorBlockAt(Location location) {
+        Location center = getCenter();
+        int radius = level.getSize() / 2;
+        int minX = center.getBlockX() - radius;
+        int maxX = center.getBlockX() + radius;
+        int minZ = center.getBlockZ() - radius;
+        int maxZ = center.getBlockZ() + radius;
+
+        int x = location.getBlockX();
+        int y = location.getBlockY();
+        int z = location.getBlockZ();
+
+        return x >= minX && x <= maxX && z >= minZ && z <= maxZ && y == 0;
     }
 }

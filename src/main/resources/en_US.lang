@@ -65,7 +65,7 @@ interface:
     wallpaper: '&6Wallpaper'
     wallpaperlore: '&7Items placed above will be used as wallpaper.'
     floor: '&6Floor'
-    floorlore: '&c(Coming Soon)'
+    floorlore: '&7Items placed below will be used as flooring.'
 
 # Command Messages
 command:
@@ -121,3 +121,6 @@ event:
   wallpaper:
     air: "&cYou can't use air as wallpaper."
     onlyblocks: "&cYou can only use blocks as wallpaper."
+  floor:
+    air: "&cYou can't use air as flooring."
+    onlyblocks: "&cYou can only use blocks as flooring."

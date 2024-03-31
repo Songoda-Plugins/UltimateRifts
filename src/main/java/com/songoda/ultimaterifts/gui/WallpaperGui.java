@@ -30,7 +30,6 @@ public class WallpaperGui extends CustomizableGui {
         ItemStack glass2 = GuiUtils.getBorderItem(Settings.GLASS_TYPE_2.getMaterial());
         ItemStack glass3 = GuiUtils.getBorderItem(Settings.GLASS_TYPE_3.getMaterial());
 
-
         mirrorFill("mirrorfill_1", 0, 0, true, true, glass2);
         mirrorFill("mirrorfill_2", 0, 1, false, true, glass2);
         mirrorFill("mirrorfill_3", 0, 2, false, true, glass3);
@@ -55,7 +54,7 @@ public class WallpaperGui extends CustomizableGui {
         ItemStack green = GuiUtils.getBorderItem(XMaterial.GREEN_STAINED_GLASS_PANE);
         ItemStack red = GuiUtils.getBorderItem(XMaterial.RED_STAINED_GLASS_PANE);
 
-        Clickable greenClick = (event) -> {
+        Clickable wallpaperClick = (event) -> {
             ItemStack[] wallpaperItems = new ItemStack[9];
             int slot = 0;
             for (int i = 10; i <= 12; i++)
@@ -89,24 +88,62 @@ public class WallpaperGui extends CustomizableGui {
             guiManager.showGUI(event.player, rift.getOverviewGui(event.player));
         };
 
+        Clickable floorClick = (event) -> {
+            ItemStack[] floorItems = new ItemStack[9];
+            int slot = 0;
+            for (int i = 14; i <= 16; i++)
+                floorItems[slot++] = getItem(i);
+            for (int i = 23; i <= 25; i++)
+                floorItems[slot++] = getItem(i);
+            for (int i = 32; i <= 34; i++)
+                floorItems[slot++] = getItem(i);
+
+            slot = 0;
+            Material[] floor = new Material[9];
+            for (ItemStack item : floorItems) {
+                if (item == null) {
+                    this.plugin.getLocale().getMessage("event.floor.air").sendPrefixedMessage(event.player);
+                    return;
+                }
+                if (!item.getType().isBlock()) {
+                    this.plugin.getLocale().getMessage("event.floor.onlyblocks").sendPrefixedMessage(event.player);
+                    return;
+                }
+
+                floor[slot++] = item.getType();
+            }
+
+            rift.setFloor(floor);
+            rift.save("floor");
+
+            // Paint the floor
+            rift.updateWalls();
+
+            guiManager.showGUI(event.player, rift.getOverviewGui(event.player));
+        };
+
         Clickable redClick = (event) -> {
             guiManager.showGUI(event.player, rift.getOverviewGui(event.player));
         };
 
-        setItem("wallpaper", 4, 2, GuiUtils.createButtonItem(XMaterial.BRICKS,
+        setButton("wallpaper", 4, 2, GuiUtils.createButtonItem(XMaterial.BRICKS,
                 plugin.getLocale().getMessage("interface.customize.wallpaper").getMessage(),
-                plugin.getLocale().getMessage("interface.customize.wallpaperlore").getMessage()));
-        setItem("floor", 4, 6, GuiUtils.createButtonItem(XMaterial.OAK_SLAB,
+                plugin.getLocale().getMessage("interface.customize.wallpaperlore").getMessage()), wallpaperClick);
+        setButton("floor", 4, 6, GuiUtils.createButtonItem(XMaterial.OAK_SLAB,
                 plugin.getLocale().getMessage("interface.customize.floor").getMessage(),
-                plugin.getLocale().getMessage("interface.customize.floorlore").getMessage()));
+                plugin.getLocale().getMessage("interface.customize.floorlore").getMessage()), floorClick);
 
         setButton("red", 5, 1, red, redClick);
         setButton("red1", 5, 2, red, redClick);
         setButton("red2", 5, 3, red, redClick);
 
-        setButton("green", 5, 5, green, greenClick);
-        setButton("green1", 5, 6, green, greenClick);
-        setButton("green2", 5, 7, green, greenClick);
+        setButton("green", 5, 5, green, wallpaperClick);
+        setButton("green1", 5, 6, green, wallpaperClick);
+        setButton("green2", 5, 7, green, wallpaperClick);
+
+        setButton("floorGreen", 5, 5, green, floorClick);
+        setButton("floorGreen1", 5, 6, green, floorClick);
+        setButton("floorGreen2", 5, 7, green, floorClick);
 
         setAcceptsItems(true);
     }
