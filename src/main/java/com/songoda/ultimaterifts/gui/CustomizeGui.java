@@ -10,6 +10,9 @@ import com.songoda.ultimaterifts.settings.Settings;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public class CustomizeGui extends CustomizableGui {
     private final UltimateRifts plugin;
     private final Rift rift;
@@ -54,7 +57,7 @@ public class CustomizeGui extends CustomizableGui {
         ItemStack green = GuiUtils.getBorderItem(XMaterial.GREEN_STAINED_GLASS_PANE);
         ItemStack red = GuiUtils.getBorderItem(XMaterial.RED_STAINED_GLASS_PANE);
 
-        Clickable wallpaperClick = (event) -> {
+        Clickable click = (event) -> {
             ItemStack[] wallpaperItems = new ItemStack[9];
             int slot = 0;
             for (int i = 10; i <= 12; i++)
@@ -64,33 +67,31 @@ public class CustomizeGui extends CustomizableGui {
             for (int i = 28; i <= 30; i++)
                 wallpaperItems[slot++] = getItem(i);
 
-            slot = 0;
-            Material[] wallpaper = new Material[9];
-            for (ItemStack item : wallpaperItems) {
-                if (item == null) {
-                    this.plugin.getLocale().getMessage("event.wallpaper.air").sendPrefixedMessage(event.player);
-                    return;
-                }
-                if (!item.getType().isBlock()) {
-                    this.plugin.getLocale().getMessage("event.wallpaper.onlyblocks").sendPrefixedMessage(event.player);
-                    return;
+            boolean updated = false;
+
+            if (Arrays.stream(wallpaperItems).anyMatch(Objects::nonNull)) {
+                updated = true;
+                slot = 0;
+                Material[] wallpaper = new Material[9];
+                for (ItemStack item : wallpaperItems) {
+                    if (item == null) {
+                        this.plugin.getLocale().getMessage("event.wallpaper.air").sendPrefixedMessage(event.player);
+                        return;
+                    }
+                    if (!item.getType().isBlock()) {
+                        this.plugin.getLocale().getMessage("event.wallpaper.onlyblocks").sendPrefixedMessage(event.player);
+                        return;
+                    }
+
+                    wallpaper[slot++] = item.getType();
                 }
 
-                wallpaper[slot++] = item.getType();
+                rift.setWallpaper(wallpaper);
+                rift.save("wallpaper");
             }
 
-            rift.setWallpaper(wallpaper);
-            rift.save("wallpaper");
-
-            // Paint the walls with wallpaper
-            rift.updateWalls();
-
-            guiManager.showGUI(event.player, rift.getOverviewGui(event.player));
-        };
-
-        Clickable floorClick = (event) -> {
             ItemStack[] floorItems = new ItemStack[9];
-            int slot = 0;
+            slot = 0;
             for (int i = 14; i <= 16; i++)
                 floorItems[slot++] = getItem(i);
             for (int i = 23; i <= 25; i++)
@@ -98,26 +99,30 @@ public class CustomizeGui extends CustomizableGui {
             for (int i = 32; i <= 34; i++)
                 floorItems[slot++] = getItem(i);
 
-            slot = 0;
-            Material[] floor = new Material[9];
-            for (ItemStack item : floorItems) {
-                if (item == null) {
-                    this.plugin.getLocale().getMessage("event.floor.air").sendPrefixedMessage(event.player);
-                    return;
-                }
-                if (!item.getType().isBlock()) {
-                    this.plugin.getLocale().getMessage("event.floor.onlyblocks").sendPrefixedMessage(event.player);
-                    return;
+            if (Arrays.stream(floorItems).anyMatch(Objects::nonNull)) {
+                updated = true;
+                slot = 0;
+                Material[] floor = new Material[9];
+                for (ItemStack item : floorItems) {
+                    if (item == null) {
+                        this.plugin.getLocale().getMessage("event.floor.air").sendPrefixedMessage(event.player);
+                        return;
+                    }
+                    if (!item.getType().isBlock()) {
+                        this.plugin.getLocale().getMessage("event.floor.onlyblocks").sendPrefixedMessage(event.player);
+                        return;
+                    }
+
+                    floor[slot++] = item.getType();
                 }
 
-                floor[slot++] = item.getType();
+                rift.setFloor(floor);
+                rift.save("floor");
             }
 
-            rift.setFloor(floor);
-            rift.save("floor");
-
-            // Paint the floor
-            rift.updateWalls();
+            // Paint the floor and walls if updated
+            if (updated)
+                rift.updateWalls();
 
             guiManager.showGUI(event.player, rift.getOverviewGui(event.player));
         };
@@ -126,24 +131,20 @@ public class CustomizeGui extends CustomizableGui {
             guiManager.showGUI(event.player, rift.getOverviewGui(event.player));
         };
 
-        setButton("wallpaper", 4, 2, GuiUtils.createButtonItem(XMaterial.BRICKS,
+        setItem("wallpaper", 4, 2, GuiUtils.createButtonItem(XMaterial.BRICKS,
                 plugin.getLocale().getMessage("interface.customize.wallpaper").getMessage(),
-                plugin.getLocale().getMessage("interface.customize.wallpaperlore").getMessage()), wallpaperClick);
-        setButton("floor", 4, 6, GuiUtils.createButtonItem(XMaterial.OAK_SLAB,
+                plugin.getLocale().getMessage("interface.customize.wallpaperlore").getMessage()));
+        setItem("floor", 4, 6, GuiUtils.createButtonItem(XMaterial.OAK_SLAB,
                 plugin.getLocale().getMessage("interface.customize.floor").getMessage(),
-                plugin.getLocale().getMessage("interface.customize.floorlore").getMessage()), floorClick);
+                plugin.getLocale().getMessage("interface.customize.floorlore").getMessage()));
 
         setButton("red", 5, 1, red, redClick);
         setButton("red1", 5, 2, red, redClick);
         setButton("red2", 5, 3, red, redClick);
 
-        setButton("green", 5, 5, green, wallpaperClick);
-        setButton("green1", 5, 6, green, wallpaperClick);
-        setButton("green2", 5, 7, green, wallpaperClick);
-
-        setButton("floorGreen", 5, 5, green, floorClick);
-        setButton("floorGreen1", 5, 6, green, floorClick);
-        setButton("floorGreen2", 5, 7, green, floorClick);
+        setButton("green", 5, 5, green, click);
+        setButton("green1", 5, 6, green, click);
+        setButton("green2", 5, 7, green, click);
 
         setAcceptsItems(true);
     }
