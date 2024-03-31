@@ -3,6 +3,7 @@ package com.songoda.ultimaterifts.commands;
 import com.craftaro.core.commands.AbstractCommand;
 import com.songoda.ultimaterifts.UltimateRifts;
 import com.songoda.ultimaterifts.rift.Rift;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -29,7 +30,8 @@ public class CommandInfo extends AbstractCommand {
         player.sendMessage(ChatColor.YELLOW + "Rift Information:");
         player.sendMessage(ChatColor.YELLOW + "Rift ID: " + ChatColor.WHITE + rift.getRiftId());
         player.sendMessage(ChatColor.YELLOW + "Level: " + ChatColor.WHITE + rift.getLevel().getLevel());
-        player.sendMessage(ChatColor.YELLOW + "Owner: " + ChatColor.WHITE + (rift.getOwner() != null ? rift.getOwner().getName() : "None"));
+        player.sendMessage(ChatColor.YELLOW + "Members: " + ChatColor.WHITE + "(" + rift.getMembers().size() + ")");
+        rift.getMembers().values().forEach(member -> player.sendMessage(ChatColor.WHITE + " - " + Bukkit.getOfflinePlayer(member.getPlayerId()).getName() + (member.isOwner() ? " (Owner)" : "")));
 
         return ReturnType.SUCCESS;
     }
