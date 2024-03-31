@@ -2,7 +2,9 @@ package com.songoda.ultimaterifts.commands;
 
 import com.craftaro.core.commands.AbstractCommand;
 import com.songoda.ultimaterifts.UltimateRifts;
+import com.songoda.ultimaterifts.rift.Member;
 import com.songoda.ultimaterifts.rift.Rift;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -22,14 +24,22 @@ public class CommandInfo extends AbstractCommand {
         Player player = (Player) sender;
         Rift rift = plugin.getRiftManager().getRiftByLocation(player.getLocation());
         if (rift == null) {
-            plugin.getLocale().newMessage("&cYou are not standing in a rift rift.").sendPrefixedMessage(sender);
+            plugin.getLocale().getMessage("command.info.notinrift").sendPrefixedMessage(sender);
             return ReturnType.FAILURE;
         }
 
-        player.sendMessage(ChatColor.YELLOW + "Rift Information:");
-        player.sendMessage(ChatColor.YELLOW + "Rift ID: " + ChatColor.WHITE + rift.getRiftId());
-        player.sendMessage(ChatColor.YELLOW + "Level: " + ChatColor.WHITE + rift.getLevel().getLevel());
-        player.sendMessage(ChatColor.YELLOW + "Owner: " + ChatColor.WHITE + (rift.getOwner() != null ? rift.getOwner().getName() : "None"));
+        player.sendMessage(plugin.getLocale().getMessage("command.info.title").getMessage());
+        player.sendMessage(plugin.getLocale().getMessage("command.info.id").processPlaceholder("id", rift.getRiftId()).getMessage());
+        player.sendMessage(plugin.getLocale().getMessage("command.info.level").processPlaceholder("level", rift.getLevel().getLevel()).getMessage());
+        player.sendMessage(plugin.getLocale().getMessage("command.info.members").processPlaceholder("members", rift.getMembers().size()).getMessage());
+
+        for (Member member : rift.getMembers().values()) {
+            String ownerSuffix = member.isOwner() ? plugin.getLocale().getMessage("command.info.ownersuffix").getMessage() : "";
+            player.sendMessage(plugin.getLocale().getMessage("command.info.memberformat")
+                    .processPlaceholder("player", Bukkit.getOfflinePlayer(member.getPlayerId()).getName())
+                    .processPlaceholder("owner", ownerSuffix)
+                    .getMessage());
+        }
 
         return ReturnType.SUCCESS;
     }

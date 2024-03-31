@@ -76,6 +76,14 @@ command:
   transferownership:
     playernotfound: '&cPlayer not found.'
   riftlimit: "&cThe player has reached the maximum number of rifts they can own."
+  info:
+    notinrift: "&cYou are not standing in a rift."
+    title: "&eRift Information:"
+    id: "&eRift ID: &f%id%"
+    level: "&eLevel: &f%level%"
+    members: "&eMembers: &f(%members%)"
+    memberformat: "&f - %player% %owner%"
+    ownersuffix: "(Owner)"
 
 # Event Messages
 event:
@@ -97,12 +105,6 @@ event:
     world: '&cYou cannot place a rift door here.'
     riftlimit: "&cYou have reached the maximum number of rifts you can own."
     ownerchange: "&aYou are now the owner of this rift."
-  enter:
-    success: '&7You have entered &6rift #%id%&7.'
-    locked: '&cThis rift is locked.'
-  exit:
-    success: '&7You have left the rift.'
-    expelled: '&cThe rift you were in has been locked.'
   interact:
     notowner: '&cYou are not the owner of this rift.'
   invite:
@@ -113,9 +115,13 @@ event:
     success: "&aRift #%id% has been destroyed."
     invalidid: "&cInvalid Rift ID. Deletion canceled."
   enter:
+    success: '&7You have entered &6rift #%id%&7.'
+    locked: '&cThis rift is locked.'
     title: "&6Entering Rift"
     subtitle: "&eRift ID: &6%id%"
   exit:
+    success: '&7You have left the rift.'
+    expelled: '&cThe rift you were in has been locked.'
     title: "&6Exiting Rift"
     subtitle: "&eCome back soon!"
   wallpaper:

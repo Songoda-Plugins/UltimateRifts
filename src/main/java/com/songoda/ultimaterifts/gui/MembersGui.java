@@ -193,8 +193,8 @@ public class MembersGui extends CustomizableGui {
     }
 
     public enum SortType {
-        DEFAULT("interface.sortingmode.default"),
-        MEMBER_SINCE("interface.sortingmode.membersince");
+        DEFAULT("interface.members.sortingmode.default"),
+        MEMBER_SINCE("interface.members.sortingmode.membersince");
 
         private final String localePath;
 
