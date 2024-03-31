@@ -76,6 +76,14 @@ command:
   transferownership:
     playernotfound: '&cPlayer not found.'
   riftlimit: "&cThe player has reached the maximum number of rifts they can own."
+  info:
+    notinrift: "&cYou are not standing in a rift."
+    title: "&eRift Information:"
+    id: "&eRift ID: &f%id%"
+    level: "&eLevel: &f%level%"
+    members: "&eMembers: &f(%members%)"
+    memberformat: "&f - %player% %owner%"
+    ownersuffix: "(Owner)"
 
 # Event Messages
 event:
