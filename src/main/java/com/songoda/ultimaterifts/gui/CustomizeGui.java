@@ -10,11 +10,11 @@ import com.songoda.ultimaterifts.settings.Settings;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-public class WallpaperGui extends CustomizableGui {
+public class CustomizeGui extends CustomizableGui {
     private final UltimateRifts plugin;
     private final Rift rift;
 
-    public WallpaperGui(UltimateRifts plugin, Rift rift) {
+    public CustomizeGui(UltimateRifts plugin, Rift rift) {
         super(plugin, "customize");
         this.rift = rift;
         this.plugin = plugin;
