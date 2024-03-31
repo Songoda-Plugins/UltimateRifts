@@ -45,7 +45,6 @@ public class UltimateRifts extends SongodaPlugin {
 
     private DatabaseManager databaseManager;
     private SchematicManager schematicManager;
-
     private RiftManager riftManager;
     private LevelManager levelManager;
 

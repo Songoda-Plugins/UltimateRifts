@@ -99,7 +99,7 @@ public class RiftManager implements LoadsData {
     public void loadDataImpl(DSLContext ctx) {
         SQLSelect.create(ctx).select("rift_id", "rift_door_world", "rift_door_x", "rift_door_y", "rift_door_z",
                         "placed_door_world", "placed_door_x", "placed_door_y", "placed_door_z", "level",
-                        "first_carve", "potion_effect", "last_door_enter", "is_locked", "wallpaper")
+                        "first_carve", "potion_effect", "last_door_enter", "is_locked", "wallpaper", "floor")
                 .from("rift", result -> {
                     int riftId = result.get("rift_id").asInt();
                     World riftDoorWorld = Bukkit.getWorld(result.get("rift_door_world").asString());
@@ -141,6 +141,20 @@ public class RiftManager implements LoadsData {
                         i++;
                     }
                     rift.setWallpaper(wallpaperMaterials);
+
+                    String floor = result.get("floor").asString();
+
+                    Material[] floorMaterials = new Material[9];
+                    i = 0;
+                    for (String materialStr : floor.split(",")) {
+                        Material material = Material.getMaterial(materialStr);
+                        if (material != null) {
+                            if (!material.isAir())
+                                floorMaterials[i] = material;
+                        }
+                        i++;
+                    }
+                    rift.setFloor(floorMaterials);
 
                     addRift(rift);
                 });
@@ -184,6 +198,10 @@ public class RiftManager implements LoadsData {
 
         ctx.alterTable("rift")
                 .addColumnIfNotExists("wallpaper", SQLDataType.VARCHAR(255).nullable(false).defaultValue(""))
+                .execute();
+
+        ctx.alterTable("rift")
+                .addColumnIfNotExists("floor", SQLDataType.VARCHAR(255).nullable(false).defaultValue(""))
                 .execute();
 
         ctx.createTableIfNotExists("rift_members")
