@@ -1,7 +1,12 @@
 name: UltimateRifts
 description: UltimateRifts
 main: com.songoda.ultimaterifts.UltimateRifts
-softdepend: [ HolographicDisplays, Vault, EpicHoppers, WorldEdit ]
+depend:
+  - WorldEdit
+softdepend:
+  - HolographicDisplays
+  - Vault
+  - EpicHoppers
 version: maven-version-number
 author: Songoda
 api-version: 1.13
