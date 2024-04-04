@@ -71,6 +71,11 @@ interface:
 command:
   give:
     success: '&7You have been given a &6level %level% &7rift item.'
+    successdropped: '&7A &6level %level% &7rift item has been dropped at your location because your inventory is full.'
+    playernotfound: '&cThat player does not exist or is currently offline.'
+    notaplayer: '&cYou need to be a player to give a farm item to yourself.'
+    invalidlevel: '&cNot a valid level... The current valid levels are: &4%lowestlevel%-&4%highestlevel%&c.'
+    invalidriftid: '&cInvalid rift ID. Please provide a valid integer.'
   addmember:
     playernotfound: '&cPlayer not found.'
   transferownership:
