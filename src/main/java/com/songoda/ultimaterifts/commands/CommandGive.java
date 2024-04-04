@@ -6,10 +6,12 @@ import com.songoda.ultimaterifts.rift.levels.Level;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
 public class CommandGive extends AbstractCommand {
+
     private final UltimateRifts plugin;
 
     public CommandGive(UltimateRifts plugin) {
@@ -25,6 +27,7 @@ public class CommandGive extends AbstractCommand {
 
         Level level = this.plugin.getLevelManager().getLowestLevel();
         Player player;
+
         if ((args.length == 2 || args.length == 3) && Bukkit.getPlayer(args[0]) == null) {
             this.plugin.getLocale().newMessage("&cThat player does not exist or is currently offline.").sendPrefixedMessage(sender);
             return ReturnType.FAILURE;
@@ -57,9 +60,19 @@ public class CommandGive extends AbstractCommand {
             }
         }
 
-        player.getInventory().addItem(plugin.createLeveledRift(riftId, level.getLevel()));
-        this.plugin.getLocale().getMessage("command.give.success")
-                .processPlaceholder("level", level.getLevel()).sendPrefixedMessage(sender);
+        ItemStack riftItem = plugin.createLeveledRift(riftId, level.getLevel());
+
+        if (player.getInventory().firstEmpty() == -1) {
+            // Inventory is full, drop the item on the ground
+            player.getWorld().dropItem(player.getLocation(), riftItem);
+            this.plugin.getLocale().getMessage("command.give.successdropped")
+                    .processPlaceholder("level", level.getLevel()).sendPrefixedMessage(sender);
+        } else {
+            // Add the item to the player's inventory
+            player.getInventory().addItem(riftItem);
+            this.plugin.getLocale().getMessage("command.give.success")
+                    .processPlaceholder("level", level.getLevel()).sendPrefixedMessage(sender);
+        }
 
         return ReturnType.SUCCESS;
     }

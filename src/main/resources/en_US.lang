@@ -71,6 +71,7 @@ interface:
 command:
   give:
     success: '&7You have been given a &6level %level% &7rift item.'
+    successdropped: '&7A &6level %level% &7rift item has been dropped at your location because your inventory is full.'
   addmember:
     playernotfound: '&cPlayer not found.'
   transferownership:
