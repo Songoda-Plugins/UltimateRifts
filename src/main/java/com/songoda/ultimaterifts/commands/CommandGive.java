@@ -27,11 +27,11 @@ public class CommandGive extends AbstractCommand {
         Player player;
 
         if ((args.length == 2 || args.length == 3) && Bukkit.getPlayer(args[0]) == null) {
-            this.plugin.getLocale().newMessage("&cThat player does not exist or is currently offline.").sendPrefixedMessage(sender);
+            this.plugin.getLocale().getMessage("command.give.playernotfound").sendPrefixedMessage(sender);
             return ReturnType.FAILURE;
         } else if (args.length == 1 || args.length == 2) {
             if (!(sender instanceof Player)) {
-                this.plugin.getLocale().newMessage("&cYou need to be a player to give a farm item to yourself.").sendPrefixedMessage(sender);
+                this.plugin.getLocale().getMessage("command.give.notaplayer").sendPrefixedMessage(sender);
                 return ReturnType.FAILURE;
             }
             player = (Player) sender;
@@ -43,14 +43,18 @@ public class CommandGive extends AbstractCommand {
             try {
                 int levelId = Integer.parseInt(args[args.length - 1]);
                 if (!this.plugin.getLevelManager().isLevel(levelId)) {
-                    this.plugin.getLocale().newMessage("&cNot a valid level... The current valid levels are: &4"
-                            + this.plugin.getLevelManager().getLowestLevel().getLevel() + "-"
-                            + this.plugin.getLevelManager().getHighestLevel().getLevel() + "&c.").sendPrefixedMessage(sender);
+                    this.plugin.getLocale().getMessage("command.give.invalidlevel")
+                            .processPlaceholder("lowestlevel", this.plugin.getLevelManager().getLowestLevel().getLevel())
+                            .processPlaceholder("highestlevel", this.plugin.getLevelManager().getHighestLevel().getLevel())
+                            .sendPrefixedMessage(sender);
                     return ReturnType.FAILURE;
                 }
                 level = this.plugin.getLevelManager().getLevel(levelId);
             } catch (NumberFormatException e) {
-                this.plugin.getLocale().newMessage("&cInvalid level ID. Please provide a valid integer.").sendPrefixedMessage(sender);
+                this.plugin.getLocale().getMessage("command.give.invalidlevel")
+                        .processPlaceholder("lowestlevel", this.plugin.getLevelManager().getLowestLevel().getLevel())
+                        .processPlaceholder("highestlevel", this.plugin.getLevelManager().getHighestLevel().getLevel())
+                        .sendPrefixedMessage(sender);
                 return ReturnType.FAILURE;
             }
         }
@@ -60,7 +64,7 @@ public class CommandGive extends AbstractCommand {
             try {
                 riftId = Integer.parseInt(args[1]);
             } catch (NumberFormatException e) {
-                this.plugin.getLocale().newMessage("&cInvalid rift ID. Please provide a valid integer.").sendPrefixedMessage(sender);
+                this.plugin.getLocale().getMessage("command.give.invalidriftid").sendPrefixedMessage(sender);
                 return ReturnType.FAILURE;
             }
         }
