@@ -7,11 +7,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-
 import java.util.List;
 
 public class CommandGive extends AbstractCommand {
-
     private final UltimateRifts plugin;
 
     public CommandGive(UltimateRifts plugin) {
@@ -41,13 +39,20 @@ public class CommandGive extends AbstractCommand {
             player = Bukkit.getPlayer(args[0]);
         }
 
-        if ((args.length == 2 || args.length == 3) && !this.plugin.getLevelManager().isLevel(Integer.parseInt(args[args.length - 1]))) {
-            this.plugin.getLocale().newMessage("&cNot a valid level... The current valid levels are: &4"
-                    + this.plugin.getLevelManager().getLowestLevel().getLevel() + "-"
-                    + this.plugin.getLevelManager().getHighestLevel().getLevel() + "&c.").sendPrefixedMessage(sender);
-            return ReturnType.FAILURE;
-        } else if (args.length >= 2) {
-            level = this.plugin.getLevelManager().getLevel(Integer.parseInt(args[args.length - 1]));
+        if ((args.length == 2 || args.length == 3)) {
+            try {
+                int levelId = Integer.parseInt(args[args.length - 1]);
+                if (!this.plugin.getLevelManager().isLevel(levelId)) {
+                    this.plugin.getLocale().newMessage("&cNot a valid level... The current valid levels are: &4"
+                            + this.plugin.getLevelManager().getLowestLevel().getLevel() + "-"
+                            + this.plugin.getLevelManager().getHighestLevel().getLevel() + "&c.").sendPrefixedMessage(sender);
+                    return ReturnType.FAILURE;
+                }
+                level = this.plugin.getLevelManager().getLevel(levelId);
+            } catch (NumberFormatException e) {
+                this.plugin.getLocale().newMessage("&cInvalid level ID. Please provide a valid integer.").sendPrefixedMessage(sender);
+                return ReturnType.FAILURE;
+            }
         }
 
         int riftId = -1;
@@ -73,7 +78,6 @@ public class CommandGive extends AbstractCommand {
             this.plugin.getLocale().getMessage("command.give.success")
                     .processPlaceholder("level", level.getLevel()).sendPrefixedMessage(sender);
         }
-
         return ReturnType.SUCCESS;
     }
 
