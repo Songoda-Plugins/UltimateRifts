@@ -35,12 +35,12 @@ public class RiftListGui extends CustomizableGui {
                             XMaterial.matchXMaterial(rift.getLevel().getDoor()),
                             plugin.getLocale().getMessage("interface.list.rift")
                                     .processPlaceholder("id", String.valueOf(rift.getRiftId()))
-                                    .getMessage(),
+                                    .toText(),
                             plugin.getLocale().getMessage("interface.list.info")
                                     .processPlaceholder("level", String.valueOf(rift.getLevel().getLevel()))
                                     .processPlaceholder("members", String.valueOf(rift.getMembers().size()))
                                     .processPlaceholder("owner", rift.getOwner().getName())
-                                    .getMessage().split("\\|")),
+                                    .toText().split("\\|")),
                     event -> {
                         if (event.clickType == ClickType.LEFT && rift.hasAccess(player)) {
                             if (player.hasPermission("ultimaterifts.teleport")) {
@@ -60,7 +60,7 @@ public class RiftListGui extends CustomizableGui {
                             ChatPrompt.showPrompt(plugin, player,
                                             plugin.getLocale().getMessage("interface.list.confirmdelete")
                                                     .processPlaceholder("id", String.valueOf(rift.getRiftId()))
-                                                    .getMessage(),
+                                                    .toText(),
                                             event1 -> {
                                                 String input = event1.getMessage().replace("#", "");
                                                 if (input.equals(String.valueOf(rift.getRiftId()))) {

@@ -28,17 +28,17 @@ public class CommandInfo extends AbstractCommand {
             return ReturnType.FAILURE;
         }
 
-        player.sendMessage(plugin.getLocale().getMessage("command.info.title").getMessage());
-        player.sendMessage(plugin.getLocale().getMessage("command.info.id").processPlaceholder("id", rift.getRiftId()).getMessage());
-        player.sendMessage(plugin.getLocale().getMessage("command.info.level").processPlaceholder("level", rift.getLevel().getLevel()).getMessage());
-        player.sendMessage(plugin.getLocale().getMessage("command.info.members").processPlaceholder("members", rift.getMembers().size()).getMessage());
+        player.sendMessage(plugin.getLocale().getMessage("command.info.title").toText());
+        player.sendMessage(plugin.getLocale().getMessage("command.info.id").processPlaceholder("id", rift.getRiftId()).toText());
+        player.sendMessage(plugin.getLocale().getMessage("command.info.level").processPlaceholder("level", rift.getLevel().getLevel()).toText());
+        player.sendMessage(plugin.getLocale().getMessage("command.info.members").processPlaceholder("members", rift.getMembers().size()).toText());
 
         for (Member member : rift.getMembers().values()) {
-            String ownerSuffix = member.isOwner() ? plugin.getLocale().getMessage("command.info.ownersuffix").getMessage() : "";
+            String ownerSuffix = member.isOwner() ? plugin.getLocale().getMessage("command.info.ownersuffix").toText() : "";
             player.sendMessage(plugin.getLocale().getMessage("command.info.memberformat")
                     .processPlaceholder("player", Bukkit.getOfflinePlayer(member.getPlayerId()).getName())
                     .processPlaceholder("owner", ownerSuffix)
-                    .getMessage());
+                    .toText());
         }
 
         return ReturnType.SUCCESS;

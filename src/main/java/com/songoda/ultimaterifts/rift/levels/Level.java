@@ -39,10 +39,10 @@ public class Level {
         Locale locale = UltimateRifts.getInstance().getLocale();
 
         this.description.add(locale.getMessage("interface.rift.size")
-                .processPlaceholder("size", size).getMessage());
+                .processPlaceholder("size", size).toText());
 
         this.description.add(locale.getMessage("interface.rift.breakdelay")
-                .processPlaceholder("delay", breakDelay).getMessage());
+                .processPlaceholder("delay", breakDelay).toText());
 
         if (!potionEffects.isEmpty()) {
             for (PotionEffect potionEffect : potionEffects) {
@@ -58,7 +58,7 @@ public class Level {
                         .processPlaceholder("effect", effectName)
                         .processPlaceholder("amplifier", romanNumeral)
                         .processPlaceholder("duration", seconds)
-                        .getMessage());
+                        .toText());
             }
         }
     }

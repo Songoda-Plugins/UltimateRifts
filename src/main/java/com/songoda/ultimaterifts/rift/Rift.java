@@ -545,9 +545,9 @@ public class Rift implements SavesData {
         openDoor(getRiftDoor().getBlock());
 
         // Send a title message to the player
-        String title = UltimateRifts.getInstance().getLocale().getMessage("event.enter.title").getMessage();
+        String title = UltimateRifts.getInstance().getLocale().getMessage("event.enter.title").toText();
         String subtitle = UltimateRifts.getInstance().getLocale().getMessage("event.enter.subtitle")
-                .processPlaceholder("id", getRiftId()).getMessage();
+                .processPlaceholder("id", getRiftId()).toText();
         player.sendTitle(title, subtitle, 10, 70, 20);
 
         UltimateRifts.getInstance().getLocale().getMessage("event.enter.success")

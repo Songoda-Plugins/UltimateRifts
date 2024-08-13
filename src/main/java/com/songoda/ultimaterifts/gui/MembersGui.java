@@ -57,8 +57,8 @@ public class MembersGui extends CustomizableGui {
 
         // Add member button
         this.setButton("add_member", 5, 1, GuiUtils.createButtonItem(XMaterial.PLAYER_HEAD,
-                        plugin.getLocale().getMessage("interface.members.addmembertitle").getMessage(),
-                        plugin.getLocale().getMessage("interface.members.addmemberlore").getMessage().split("\\|")),
+                        plugin.getLocale().getMessage("interface.members.addmembertitle").toText(),
+                        plugin.getLocale().getMessage("interface.members.addmemberlore").toText().split("\\|")),
                 (event) -> {
                     if (rift.getMembers().size() >= Settings.MAX_RIFT_MEMBERS.getInt()) {
                         plugin.getLocale().getMessage("event.invite.maxmembers").sendPrefixedMessage(event.player);
@@ -84,8 +84,8 @@ public class MembersGui extends CustomizableGui {
 
         // Transfer ownership button
         this.setButton("transfer_ownership", 5, 7, GuiUtils.createButtonItem(XMaterial.ENDER_PEARL,
-                        plugin.getLocale().getMessage("interface.members.transferownershiptitle").getMessage(),
-                        plugin.getLocale().getMessage("interface.members.transferownershiplore").getMessage().split("\\|")),
+                        plugin.getLocale().getMessage("interface.members.transferownershiptitle").toText(),
+                        plugin.getLocale().getMessage("interface.members.transferownershiplore").toText().split("\\|")),
                 (event) -> {
                     AnvilGui gui = new AnvilGui(event.player, this);
                     gui.setAction((e) -> {
@@ -100,7 +100,7 @@ public class MembersGui extends CustomizableGui {
                             }
                             showPage();
                         } else {
-                            event.player.sendMessage(plugin.getLocale().getMessage("command.transferownership.playernotfound").getMessage());
+                            event.player.sendMessage(plugin.getLocale().getMessage("command.transferownership.playernotfound").toText());
                         }
                         e.manager.showGUI(e.player, this);
                     });
@@ -117,17 +117,17 @@ public class MembersGui extends CustomizableGui {
     private void showPage() {
         // refresh stats
         this.setItem("stats", 4, GuiUtils.updateItem(this.getItem(4),
-                this.plugin.getLocale().getMessage("interface.members.statstitle").getMessage(),
+                this.plugin.getLocale().getMessage("interface.members.statstitle").toText(),
                 this.plugin.getLocale().getMessage("interface.members.statslore")
-                        .processPlaceholder("members", rift.getMembers().size()).getMessage().split("\\|")));
+                        .processPlaceholder("members", rift.getMembers().size()).toText().split("\\|")));
 
         // Sort button
         this.setItem("sort", 5, GuiUtils.updateItem(this.getItem(5),
-                this.plugin.getLocale().getMessage("interface.members.changesorttitle").getMessage(),
+                this.plugin.getLocale().getMessage("interface.members.changesorttitle").toText(),
                 this.plugin.getLocale().getMessage("general.interface.current")
                         .processPlaceholder("current",
-                                this.plugin.getLocale().getMessage(this.sortType.getLocalePath()).getMessage())
-                        .getMessage().split("\\|")));
+                                this.plugin.getLocale().getMessage(this.sortType.getLocalePath()).toText())
+                        .toText().split("\\|")));
 
         // show members
         List<UUID> toDisplay = new ArrayList<>(rift.getMembers().keySet());
@@ -157,16 +157,16 @@ public class MembersGui extends CustomizableGui {
                 OfflinePlayer skullPlayer = Bukkit.getOfflinePlayer(playerUUID);
                 Member member = rift.getMembers().get(playerUUID);
 
-                List<String> lore = new ArrayList<>(Arrays.asList(plugin.getLocale().getMessage("interface.members.skulllore").getMessage().split("\\|")));
+                List<String> lore = new ArrayList<>(Arrays.asList(plugin.getLocale().getMessage("interface.members.skulllore").toText().split("\\|")));
                 lore.add("");
                 if (member.isOwner()) {
-                    lore.add(ChatColor.YELLOW + plugin.getLocale().getMessage("interface.members.owner").getMessage());
+                    lore.add(ChatColor.YELLOW + plugin.getLocale().getMessage("interface.members.owner").toText());
                 } else {
-                    lore.add(plugin.getLocale().getMessage("interface.members.member").getMessage());
+                    lore.add(plugin.getLocale().getMessage("interface.members.member").toText());
                     lore.add("");
                     lore.add(plugin.getLocale().getMessage("interface.members.membersince")
                             .processPlaceholder("membersince", new SimpleDateFormat("dd/MM/yyyy").format(new Date(member.getTimestamp())))
-                            .getMessage());
+                            .toText());
                     this.setAction(row, col, (event) -> {
                         rift.removeMember(playerUUID);
                         member.delete();

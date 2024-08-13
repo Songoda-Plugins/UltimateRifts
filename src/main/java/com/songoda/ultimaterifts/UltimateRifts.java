@@ -239,7 +239,7 @@ public class UltimateRifts extends SongodaPlugin {
         return getLocale()
                 .getMessage("general.nametag.rift")
                 .processPlaceholder("level", level)
-                .getMessage();
+                .toText();
     }
 
     public LevelManager getLevelManager() {
