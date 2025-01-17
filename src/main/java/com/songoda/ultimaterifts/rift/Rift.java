@@ -123,8 +123,7 @@ public class Rift implements SavesData {
     }
 
     private boolean isDoorBlock(Location location) {
-        Block block = location.getBlock();
-        return block.getType().toString().contains("DOOR");
+        return location.getBlock().getBlockData() instanceof Door;
     }
 
     private World getRiftWorld() {
