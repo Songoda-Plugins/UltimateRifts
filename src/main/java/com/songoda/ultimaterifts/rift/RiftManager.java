@@ -1,10 +1,10 @@
 package com.songoda.ultimaterifts.rift;
 
-import com.craftaro.core.data.LoadsData;
-import com.craftaro.core.data.SQLSelect;
-import com.craftaro.third_party.org.jooq.DSLContext;
-import com.craftaro.third_party.org.jooq.impl.DSL;
-import com.craftaro.third_party.org.jooq.impl.SQLDataType;
+import com.songoda.core.data.LoadsData;
+import com.songoda.core.data.SQLSelect;
+import com.songoda.third_party.org.jooq.DSLContext;
+import com.songoda.third_party.org.jooq.impl.DSL;
+import com.songoda.third_party.org.jooq.impl.SQLDataType;
 import com.songoda.ultimaterifts.UltimateRifts;
 import com.songoda.ultimaterifts.settings.Settings;
 import org.bukkit.Bukkit;

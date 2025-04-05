@@ -1,11 +1,11 @@
 package com.songoda.ultimaterifts.gui;
 
-import com.craftaro.core.gui.AnvilGui;
-import com.craftaro.core.gui.CustomizableGui;
-import com.craftaro.core.gui.GuiUtils;
-import com.craftaro.core.utils.ItemUtils;
-import com.craftaro.third_party.com.cryptomorin.xseries.XMaterial;
-import com.craftaro.third_party.com.cryptomorin.xseries.XSound;
+import com.songoda.core.gui.AnvilGui;
+import com.songoda.core.gui.CustomizableGui;
+import com.songoda.core.gui.GuiUtils;
+import com.songoda.core.utils.ItemUtils;
+import com.songoda.third_party.com.cryptomorin.xseries.XMaterial;
+import com.songoda.third_party.com.cryptomorin.xseries.XSound;
 import com.songoda.ultimaterifts.UltimateRifts;
 import com.songoda.ultimaterifts.rift.Member;
 import com.songoda.ultimaterifts.rift.Rift;

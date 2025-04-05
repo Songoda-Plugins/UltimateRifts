@@ -1,7 +1,7 @@
 package com.songoda.ultimaterifts.listeners;
 
-import com.craftaro.core.third_party.de.tr7zw.nbtapi.NBTItem;
-import com.craftaro.third_party.com.cryptomorin.xseries.XSound;
+import com.songoda.core.third_party.de.tr7zw.nbtapi.NBTItem;
+import com.songoda.third_party.com.cryptomorin.xseries.XSound;
 import com.songoda.ultimaterifts.UltimateRifts;
 import com.songoda.ultimaterifts.rift.DoorHandler;
 import com.songoda.ultimaterifts.rift.Rift;

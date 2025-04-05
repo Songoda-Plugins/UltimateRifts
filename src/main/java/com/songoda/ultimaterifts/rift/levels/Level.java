@@ -1,7 +1,7 @@
 package com.songoda.ultimaterifts.rift.levels;
 
-import com.craftaro.core.locale.Locale;
-import com.craftaro.third_party.com.cryptomorin.xseries.XMaterial;
+import com.songoda.core.locale.Locale;
+import com.songoda.third_party.com.cryptomorin.xseries.XMaterial;
 import com.songoda.ultimaterifts.UltimateRifts;
 import org.bukkit.Material;
 import org.bukkit.potion.PotionEffect;

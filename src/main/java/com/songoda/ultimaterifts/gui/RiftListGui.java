@@ -1,13 +1,12 @@
 package com.songoda.ultimaterifts.gui;
 
-import com.craftaro.core.gui.CustomizableGui;
-import com.craftaro.core.gui.GuiUtils;
-import com.craftaro.core.input.ChatPrompt;
-import com.craftaro.third_party.com.cryptomorin.xseries.XMaterial;
-import com.craftaro.third_party.com.cryptomorin.xseries.XSound;
+import com.songoda.core.gui.CustomizableGui;
+import com.songoda.core.gui.GuiUtils;
+import com.songoda.core.input.ChatPrompt;
+import com.songoda.third_party.com.cryptomorin.xseries.XMaterial;
+import com.songoda.third_party.com.cryptomorin.xseries.XSound;
 import com.songoda.ultimaterifts.UltimateRifts;
 import com.songoda.ultimaterifts.rift.Rift;
-import com.songoda.ultimaterifts.settings.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;

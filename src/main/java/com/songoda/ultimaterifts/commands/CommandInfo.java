@@ -1,11 +1,10 @@
 package com.songoda.ultimaterifts.commands;
 
-import com.craftaro.core.commands.AbstractCommand;
+import com.songoda.core.commands.AbstractCommand;
 import com.songoda.ultimaterifts.UltimateRifts;
 import com.songoda.ultimaterifts.rift.Member;
 import com.songoda.ultimaterifts.rift.Rift;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

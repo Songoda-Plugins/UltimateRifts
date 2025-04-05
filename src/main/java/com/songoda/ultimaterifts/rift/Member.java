@@ -1,9 +1,9 @@
 package com.songoda.ultimaterifts.rift;
 
-import com.craftaro.core.data.SQLDelete;
-import com.craftaro.core.data.SQLInsert;
-import com.craftaro.core.data.SavesData;
-import com.craftaro.third_party.org.jooq.DSLContext;
+import com.songoda.core.data.SQLDelete;
+import com.songoda.core.data.SQLInsert;
+import com.songoda.core.data.SavesData;
+import com.songoda.third_party.org.jooq.DSLContext;
 
 import java.util.UUID;
 

@@ -1,6 +1,6 @@
 package com.songoda.ultimaterifts.commands;
 
-import com.craftaro.core.commands.AbstractCommand;
+import com.songoda.core.commands.AbstractCommand;
 import com.songoda.ultimaterifts.UltimateRifts;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
