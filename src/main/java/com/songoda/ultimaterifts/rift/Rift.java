@@ -1,12 +1,12 @@
 package com.songoda.ultimaterifts.rift;
 
-import com.craftaro.core.compatibility.ServerVersion;
-import com.craftaro.core.data.SQLDelete;
-import com.craftaro.core.data.SQLInsert;
-import com.craftaro.core.data.SavesData;
-import com.craftaro.core.hooks.EconomyManager;
-import com.craftaro.third_party.com.cryptomorin.xseries.XSound;
-import com.craftaro.third_party.org.jooq.DSLContext;
+import com.songoda.core.compatibility.ServerVersion;
+import com.songoda.core.data.SQLDelete;
+import com.songoda.core.data.SQLInsert;
+import com.songoda.core.data.SavesData;
+import com.songoda.core.hooks.EconomyManager;
+import com.songoda.third_party.com.cryptomorin.xseries.XSound;
+import com.songoda.third_party.org.jooq.DSLContext;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.MaxChangedBlocksException;
 import com.sk89q.worldedit.WorldEdit;
@@ -123,8 +123,7 @@ public class Rift implements SavesData {
     }
 
     private boolean isDoorBlock(Location location) {
-        Block block = location.getBlock();
-        return block.getType().toString().contains("DOOR");
+        return location.getBlock().getBlockData() instanceof Door;
     }
 
     private World getRiftWorld() {
@@ -545,9 +544,9 @@ public class Rift implements SavesData {
         openDoor(getRiftDoor().getBlock());
 
         // Send a title message to the player
-        String title = UltimateRifts.getInstance().getLocale().getMessage("event.enter.title").getMessage();
+        String title = UltimateRifts.getInstance().getLocale().getMessage("event.enter.title").toText();
         String subtitle = UltimateRifts.getInstance().getLocale().getMessage("event.enter.subtitle")
-                .processPlaceholder("id", getRiftId()).getMessage();
+                .processPlaceholder("id", getRiftId()).toText();
         player.sendTitle(title, subtitle, 10, 70, 20);
 
         UltimateRifts.getInstance().getLocale().getMessage("event.enter.success")

@@ -1,7 +1,7 @@
 package com.songoda.ultimaterifts.commands;
 
-import com.craftaro.core.commands.AbstractCommand;
-import com.craftaro.third_party.com.cryptomorin.xseries.XSound;
+import com.songoda.core.commands.AbstractCommand;
+import com.songoda.third_party.com.cryptomorin.xseries.XSound;
 import com.songoda.ultimaterifts.UltimateRifts;
 import com.songoda.ultimaterifts.rift.Rift;
 import org.bukkit.command.CommandSender;

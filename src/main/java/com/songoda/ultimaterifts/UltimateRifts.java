@@ -1,15 +1,15 @@
 package com.songoda.ultimaterifts;
 
-import com.craftaro.core.SongodaCore;
-import com.craftaro.core.SongodaPlugin;
-import com.craftaro.core.commands.CommandManager;
-import com.craftaro.core.configuration.Config;
-import com.craftaro.core.data.DatabaseManager;
-import com.craftaro.core.gui.GuiManager;
-import com.craftaro.core.hooks.EconomyManager;
-import com.craftaro.core.third_party.de.tr7zw.nbtapi.NBTItem;
-import com.craftaro.core.utils.TextUtils;
-import com.craftaro.third_party.com.cryptomorin.xseries.XMaterial;
+import com.songoda.core.SongodaCore;
+import com.songoda.core.SongodaPlugin;
+import com.songoda.core.commands.CommandManager;
+import com.songoda.core.configuration.Config;
+import com.songoda.core.data.DatabaseManager;
+import com.songoda.core.gui.GuiManager;
+import com.songoda.core.hooks.EconomyManager;
+import com.songoda.core.third_party.de.tr7zw.nbtapi.NBTItem;
+import com.songoda.core.utils.TextUtils;
+import com.songoda.third_party.com.cryptomorin.xseries.XMaterial;
 import com.songoda.ultimaterifts.commands.*;
 import com.songoda.ultimaterifts.generator.StonePlotGenerator;
 import com.songoda.ultimaterifts.listeners.BlockListeners;
@@ -239,7 +239,7 @@ public class UltimateRifts extends SongodaPlugin {
         return getLocale()
                 .getMessage("general.nametag.rift")
                 .processPlaceholder("level", level)
-                .getMessage();
+                .toText();
     }
 
     public LevelManager getLevelManager() {

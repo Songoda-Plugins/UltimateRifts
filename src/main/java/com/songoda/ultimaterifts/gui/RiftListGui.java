@@ -1,13 +1,12 @@
 package com.songoda.ultimaterifts.gui;
 
-import com.craftaro.core.gui.CustomizableGui;
-import com.craftaro.core.gui.GuiUtils;
-import com.craftaro.core.input.ChatPrompt;
-import com.craftaro.third_party.com.cryptomorin.xseries.XMaterial;
-import com.craftaro.third_party.com.cryptomorin.xseries.XSound;
+import com.songoda.core.gui.CustomizableGui;
+import com.songoda.core.gui.GuiUtils;
+import com.songoda.core.input.ChatPrompt;
+import com.songoda.third_party.com.cryptomorin.xseries.XMaterial;
+import com.songoda.third_party.com.cryptomorin.xseries.XSound;
 import com.songoda.ultimaterifts.UltimateRifts;
 import com.songoda.ultimaterifts.rift.Rift;
-import com.songoda.ultimaterifts.settings.Settings;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -35,12 +34,12 @@ public class RiftListGui extends CustomizableGui {
                             XMaterial.matchXMaterial(rift.getLevel().getDoor()),
                             plugin.getLocale().getMessage("interface.list.rift")
                                     .processPlaceholder("id", String.valueOf(rift.getRiftId()))
-                                    .getMessage(),
+                                    .toText(),
                             plugin.getLocale().getMessage("interface.list.info")
                                     .processPlaceholder("level", String.valueOf(rift.getLevel().getLevel()))
                                     .processPlaceholder("members", String.valueOf(rift.getMembers().size()))
                                     .processPlaceholder("owner", rift.getOwner().getName())
-                                    .getMessage().split("\\|")),
+                                    .toText().split("\\|")),
                     event -> {
                         if (event.clickType == ClickType.LEFT && rift.hasAccess(player)) {
                             if (player.hasPermission("ultimaterifts.teleport")) {
@@ -60,7 +59,7 @@ public class RiftListGui extends CustomizableGui {
                             ChatPrompt.showPrompt(plugin, player,
                                             plugin.getLocale().getMessage("interface.list.confirmdelete")
                                                     .processPlaceholder("id", String.valueOf(rift.getRiftId()))
-                                                    .getMessage(),
+                                                    .toText(),
                                             event1 -> {
                                                 String input = event1.getMessage().replace("#", "");
                                                 if (input.equals(String.valueOf(rift.getRiftId()))) {

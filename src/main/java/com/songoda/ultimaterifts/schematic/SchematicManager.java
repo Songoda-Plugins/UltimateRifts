@@ -18,7 +18,6 @@ import com.sk89q.worldedit.session.ClipboardHolder;
 import com.sk89q.worldedit.world.World;
 import com.songoda.ultimaterifts.UltimateRifts;
 import org.bukkit.Location;
-import org.bukkit.Material;
 
 import java.io.File;
 import java.io.FileOutputStream;

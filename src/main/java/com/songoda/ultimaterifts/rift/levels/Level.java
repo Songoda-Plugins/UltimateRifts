@@ -1,7 +1,7 @@
 package com.songoda.ultimaterifts.rift.levels;
 
-import com.craftaro.core.locale.Locale;
-import com.craftaro.third_party.com.cryptomorin.xseries.XMaterial;
+import com.songoda.core.locale.Locale;
+import com.songoda.third_party.com.cryptomorin.xseries.XMaterial;
 import com.songoda.ultimaterifts.UltimateRifts;
 import org.bukkit.Material;
 import org.bukkit.potion.PotionEffect;
@@ -39,10 +39,10 @@ public class Level {
         Locale locale = UltimateRifts.getInstance().getLocale();
 
         this.description.add(locale.getMessage("interface.rift.size")
-                .processPlaceholder("size", size).getMessage());
+                .processPlaceholder("size", size).toText());
 
         this.description.add(locale.getMessage("interface.rift.breakdelay")
-                .processPlaceholder("delay", breakDelay).getMessage());
+                .processPlaceholder("delay", breakDelay).toText());
 
         if (!potionEffects.isEmpty()) {
             for (PotionEffect potionEffect : potionEffects) {
@@ -58,7 +58,7 @@ public class Level {
                         .processPlaceholder("effect", effectName)
                         .processPlaceholder("amplifier", romanNumeral)
                         .processPlaceholder("duration", seconds)
-                        .getMessage());
+                        .toText());
             }
         }
     }

@@ -1,9 +1,9 @@
 package com.songoda.ultimaterifts.gui;
 
-import com.craftaro.core.gui.CustomizableGui;
-import com.craftaro.core.gui.GuiUtils;
-import com.craftaro.core.utils.NumberUtils;
-import com.craftaro.third_party.com.cryptomorin.xseries.XMaterial;
+import com.songoda.core.gui.CustomizableGui;
+import com.songoda.core.gui.GuiUtils;
+import com.songoda.core.utils.NumberUtils;
+import com.songoda.third_party.com.cryptomorin.xseries.XMaterial;
 import com.songoda.ultimaterifts.UltimateRifts;
 import com.songoda.ultimaterifts.rift.Rift;
 import com.songoda.ultimaterifts.rift.levels.Level;
@@ -68,7 +68,7 @@ public class OverviewGui extends CustomizableGui {
         setItem("information", 1, 4, GuiUtils.createButtonItem(
                 Settings.HUB_ITEM.getMaterial(XMaterial.BEACON),
                 plugin.getLocale().getMessage("interface.rift.currentlevel")
-                        .processPlaceholder("level", level.getLevel()).getMessage(),
+                        .processPlaceholder("level", level.getLevel()).toText(),
                 getRiftDescription(nextLevel)));
 
         if (Settings.UPGRADE_WITH_XP.getBoolean()
@@ -76,11 +76,11 @@ public class OverviewGui extends CustomizableGui {
                 && player.hasPermission("Ultimaterifts.Upgrade.XP")) {
             setButton("upgrade_xp", 1, 2, GuiUtils.createButtonItem(
                             Settings.XP_ICON.getMaterial(XMaterial.EXPERIENCE_BOTTLE),
-                            plugin.getLocale().getMessage("interface.rift.upgradewithxp").getMessage(),
+                            plugin.getLocale().getMessage("interface.rift.upgradewithxp").toText(),
                             nextLevel != null
                                     ? plugin.getLocale().getMessage("interface.rift.upgradewithxplore")
-                                    .processPlaceholder("cost", nextLevel.getCostExperience()).getMessage()
-                                    : plugin.getLocale().getMessage("interface.rift.alreadymaxed").getMessage()),
+                                    .processPlaceholder("cost", nextLevel.getCostExperience()).toText()
+                                    : plugin.getLocale().getMessage("interface.rift.alreadymaxed").toText()),
                     (event) -> {
                         rift.upgradeAndCarve(this.player, CostType.EXPERIENCE);
                         showPage();
@@ -92,11 +92,11 @@ public class OverviewGui extends CustomizableGui {
                 && this.player.hasPermission("Ultimaterifts.Upgrade.ECO")) {
             setButton("upgrade_economy", 1, 6, GuiUtils.createButtonItem(
                             Settings.ECO_ICON.getMaterial(XMaterial.SUNFLOWER),
-                            this.plugin.getLocale().getMessage("interface.rift.upgradewitheconomy").getMessage(),
+                            this.plugin.getLocale().getMessage("interface.rift.upgradewitheconomy").toText(),
                             nextLevel != null
                                     ? this.plugin.getLocale().getMessage("interface.rift.upgradewitheconomylore")
-                                    .processPlaceholder("cost", NumberUtils.formatNumber(nextLevel.getCostEconomy())).getMessage()
-                                    : this.plugin.getLocale().getMessage("interface.rift.alreadymaxed").getMessage()),
+                                    .processPlaceholder("cost", NumberUtils.formatNumber(nextLevel.getCostEconomy())).toText()
+                                    : this.plugin.getLocale().getMessage("interface.rift.alreadymaxed").toText()),
                     (event) -> {
                         rift.upgradeAndCarve(this.player, CostType.ECONOMY);
                         showPage();
@@ -106,8 +106,8 @@ public class OverviewGui extends CustomizableGui {
         if (Settings.ALLOW_CUSTOMIZING.getBoolean()) {
             setButton("customize", 0, 0, GuiUtils.createButtonItem(
                             Settings.CUSTOMIZE_ICON.getMaterial(XMaterial.PAINTING),
-                            this.plugin.getLocale().getMessage("interface.rift.customize").getMessage(),
-                            this.plugin.getLocale().getMessage("interface.rift.customizelore").getMessage().split("\\|")),
+                            this.plugin.getLocale().getMessage("interface.rift.customize").toText(),
+                            this.plugin.getLocale().getMessage("interface.rift.customizelore").toText().split("\\|")),
                     event -> {
                         this.plugin.getGuiManager().showGUI(this.player, new CustomizeGui(plugin, this.rift));
                         showPage();
@@ -117,8 +117,8 @@ public class OverviewGui extends CustomizableGui {
         if (Settings.ALLOW_LOCKED.getBoolean()) {
             setButton("locked", 0, 8, GuiUtils.createButtonItem(
                             Settings.LOCK_ICON.getMaterial(XMaterial.REDSTONE_BLOCK),
-                            rift.isLocked() ? this.plugin.getLocale().getMessage("interface.rift.locked").getMessage().split("\\|")
-                                    : this.plugin.getLocale().getMessage("interface.rift.unlocked").getMessage().split("\\|")),
+                            rift.isLocked() ? this.plugin.getLocale().getMessage("interface.rift.locked").toText().split("\\|")
+                                    : this.plugin.getLocale().getMessage("interface.rift.unlocked").toText().split("\\|")),
                     event -> {
                         rift.setLocked(!rift.isLocked());
                         if (rift.isLocked())
@@ -131,9 +131,9 @@ public class OverviewGui extends CustomizableGui {
         if (Settings.ALLOW_INVITES.getBoolean()) {
             setButton("invite", 0, 7, GuiUtils.createButtonItem(
                             Settings.INVITE_ICON.getMaterial(XMaterial.PAPER),
-                            this.plugin.getLocale().getMessage("interface.rift.members").getMessage(),
+                            this.plugin.getLocale().getMessage("interface.rift.members").toText(),
                             this.plugin.getLocale().getMessage("interface.rift.memberslore")
-                                    .processPlaceholder("members", rift.getMembers().size()).getMessage().split("\\|")),
+                                    .processPlaceholder("members", rift.getMembers().size()).toText().split("\\|")),
                     event -> {
                         this.plugin.getGuiManager().showGUI(this.player, new MembersGui(plugin, this.rift));
                     });
@@ -142,8 +142,8 @@ public class OverviewGui extends CustomizableGui {
         if (Settings.ALLOW_MOVE_DOOR.getBoolean()) {
             setButton("move_door", 0, 6, GuiUtils.createButtonItem(
                             XMaterial.OAK_DOOR.parseItem(),
-                            this.plugin.getLocale().getMessage("interface.rift.movedoor").getMessage(),
-                            this.plugin.getLocale().getMessage("interface.rift.movedoorlore").getMessage().split("\\|")),
+                            this.plugin.getLocale().getMessage("interface.rift.movedoor").toText(),
+                            this.plugin.getLocale().getMessage("interface.rift.movedoorlore").toText().split("\\|")),
                     event -> {
                         this.plugin.getDoorHandler().addSelection(this.player);
                         exit();
@@ -159,10 +159,10 @@ public class OverviewGui extends CustomizableGui {
         if (!level.getPotionEffects().isEmpty()) {
             setButton("potion_effect", infoIconOrder[num][current++], GuiUtils.createButtonItem(
                             Settings.POTION_EFFECT_ICON.getMaterial(XMaterial.POTION),
-                            this.plugin.getLocale().getMessage("interface.rift.potioneffecttitle").getMessage(),
+                            this.plugin.getLocale().getMessage("interface.rift.potioneffecttitle").toText(),
                             this.plugin.getLocale().getMessage("interface.rift.potioneffectinfo")
-                                    .processPlaceholder("status", rift.isPotionEffect() ? plugin.getLocale().getMessage("on").getMessage()
-                                            : plugin.getLocale().getMessage("off").getMessage()).getMessage().split("\\|")),
+                                    .processPlaceholder("status", rift.isPotionEffect() ? plugin.getLocale().getMessage("on").toText()
+                                            : plugin.getLocale().getMessage("off").toText()).toText().split("\\|")),
                     event -> {
                         rift.setPotionEffect(!rift.isPotionEffect());
                         showPage();
@@ -176,10 +176,10 @@ public class OverviewGui extends CustomizableGui {
         lore.addAll(level.getDescription());
         lore.add("");
         if (nextLevel == null) {
-            lore.add(plugin.getLocale().getMessage("interface.rift.alreadymaxed").getMessage());
+            lore.add(plugin.getLocale().getMessage("interface.rift.alreadymaxed").toText());
         } else {
             lore.add(plugin.getLocale().getMessage("interface.rift.level")
-                    .processPlaceholder("level", nextLevel.getLevel()).getMessage());
+                    .processPlaceholder("level", nextLevel.getLevel()).toText());
             lore.addAll(nextLevel.getDescription());
         }
         return lore;
