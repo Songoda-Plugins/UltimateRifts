@@ -34,7 +34,7 @@ create a thread over on [our Discord server][Discord invite].
 
 [Plugin page]: https://songoda.com/product/25
 [Plugin wiki]: https://songoda.notion.site/UltimateRifts-c39b0524fe4849c7a933405e29c9c395
-[Discord invite]: https://discord.gg/7TXM8xr2Ng
+[Discord invite]: https://discord.gg/vtuJUfebrd
 [bStats page]: https://bstats.org/plugin/bukkit/EpicAutomators/4180
 
 [Discord shield]: https://img.shields.io/discord/1214289374506917889?color=5865F2&label=Discord&logo=discord&logoColor=5865F2
