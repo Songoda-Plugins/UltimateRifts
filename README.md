@@ -46,6 +46,6 @@ Share feature suggestions and feedback through our [Discord server][Discord invi
 [Discord invite]: https://discord.gg/vtuJUfebrd
 [bStats page]: https://bstats.org/plugin/bukkit/EpicAutomators/4180
 
-[Discord shield]: https://img.shields.io/discord/1214289374506917889?color=5865F2&label=Discord&logo=discord&logoColor=5865F2
+[Discord shield]: https://img.shields.io/discord/1526667086376603772?color=5865F2&label=Discord&logo=discord&logoColor=5865F2
 [bStats shield]: https://img.shields.io/bstats/servers/4180?label=Servers
 [Latest version shield]: https://img.shields.io/badge/dynamic/xml?style=flat&color=blue&logo=github&logoColor=white&label=Latest&url=https%3A%2F%2Fraw.githubusercontent.com%2Fcraftaro%2FEpicFarming%2Fmaster%2Fpom.xml&query=%2F*%5Blocal-name()%3D'project'%5D%2F*%5Blocal-name()%3D'version'%5D
